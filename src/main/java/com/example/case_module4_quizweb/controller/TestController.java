@@ -1,16 +1,15 @@
 package com.example.case_module4_quizweb.controller;
 
+import com.example.case_module4_quizweb.model.Quiz;
 import com.example.case_module4_quizweb.model.Test;
 import com.example.case_module4_quizweb.sevice.test.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -27,5 +26,13 @@ public class TestController {
         }
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
-
+    @PostMapping("")
+    public ResponseEntity<Test> findQuizById(@RequestParam Long id) {
+        Optional<Test> testOptional = testService.findById(id);
+        if (!testOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Test test = testOptional.get();
+        return new ResponseEntity<>(test, HttpStatus.OK);
+    }
 }
