@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function allUser() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/users",
+                success: function (hi) {
+                    console.log(hi)
+                    displayUser(hi)
+                }
+            })
+        }
+
+
+
+        function displayUser(user) {
+            let res = "";
+            res += `<table border="1" cellpadding="5">
+                <tr>
+                    <th>username</th>
+                    <th>password</th>
+                    <th>confirm password</th>
+                    <th>enabled</th>
+                    <th>fullName</th>
+                    <th>email</th>
+                    <th>dateOfBirth</th>
+                    <th>avatar</th>
+                    <th>address</th>
+                    <th>status</th>
+                    <th colspan="3">Action</th>
+                </tr>`
+            for (let i = 0; i < user.length; i++) {
+                res += `<tr>
+                    <td> ${user[i].username}</td>
+                    <td> ${user[i].password}</t d>
+                    <td> ${user[i].confirmPassword}</td>
+                    <td> ${user[i].enabled}</td>
+                    <td> ${user[i].fullName}</td>
+                    <td> ${user[i].email}</td>
+                    <td> ${user[i].dateOfBirth}</td>
+                    <td> ${user[i].avatar}</td>
+                    <td> ${user[i].address}</td>
+                    <td> ${user[i].status}</td>
+
+                    <td><button onclick="viewPost(${user[i].id})">View</button></td>
+                    <td><button onclick="showFormEditPost(${user[i].id})">Edit</button></td>
+                    <td><button onclick="deletePost(${user[i].id})">Delete</button></td>
+                        </tr>`
+            }
+            res += `</table>`
+            document.getElementById("display").innerHTML = res;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</head>
+<body>
+<button onclick="allUser()">user</button>
+<button onclick="formCreate()">add</button>
+<div id="display"></div>
+
+</body>
+</html>

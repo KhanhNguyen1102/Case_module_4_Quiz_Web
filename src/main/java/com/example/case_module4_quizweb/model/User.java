@@ -1,5 +1,7 @@
 package com.example.case_module4_quizweb.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -35,6 +37,7 @@ public class User implements Serializable {
     private String email;
 
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dateOfBirth;
 
     private String avatar;

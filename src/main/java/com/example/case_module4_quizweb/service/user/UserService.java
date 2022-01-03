@@ -1,8 +1,7 @@
-package com.example.case_module4_quizweb.service.impl;
+package com.example.case_module4_quizweb.service.user;
 
 import com.example.case_module4_quizweb.model.User;
 import com.example.case_module4_quizweb.repository.UserRepository;
-import com.example.case_module4_quizweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
