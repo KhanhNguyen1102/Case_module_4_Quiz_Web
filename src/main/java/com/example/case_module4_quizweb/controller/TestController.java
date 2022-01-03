@@ -1,6 +1,5 @@
 package com.example.case_module4_quizweb.controller;
 
-import com.example.case_module4_quizweb.model.Quiz;
 import com.example.case_module4_quizweb.model.Test;
 import com.example.case_module4_quizweb.sevice.test.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ public class TestController {
         }
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
+
     @PostMapping("")
     public ResponseEntity<Test> findQuizById(@RequestParam Long id) {
         Optional<Test> testOptional = testService.findById(id);
@@ -34,5 +34,10 @@ public class TestController {
         }
         Test test = testOptional.get();
         return new ResponseEntity<>(test, HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Test> createQuiz(@RequestBody Test test) {
+        return new ResponseEntity<>(testService.save(test), HttpStatus.OK);
     }
 }
