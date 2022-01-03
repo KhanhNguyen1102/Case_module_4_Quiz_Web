@@ -25,15 +25,15 @@ public class CategoryController {
         }
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
-//    @PostMapping("")
-//    public ResponseEntity<Category> findBlogById(@RequestParam Long id) {
-//        Optional<Category> categoryOptional = categoryService.findById(id);
-//        if (!categoryOptional.isPresent()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        Category category = categoryOptional.get();
-//        return new ResponseEntity<>(category, HttpStatus.OK);
-//    }
+    @PostMapping("")
+    public ResponseEntity<Category> findBlogById(@RequestParam Long id) {
+        Optional<Category> categoryOptional = categoryService.findById(id);
+        if (!categoryOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Category category = categoryOptional.get();
+        return new ResponseEntity<>(category, HttpStatus.OK);
+    }
 //    @PutMapping("")
 //    public ResponseEntity<Category> updateBlog(@RequestParam Long id, @RequestBody Category category) {
 //        Optional<Category> categoryOptional = categoryService.findById(id);
