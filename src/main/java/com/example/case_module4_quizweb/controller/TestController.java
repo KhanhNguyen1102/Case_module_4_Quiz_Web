@@ -40,4 +40,23 @@ public class TestController {
     public ResponseEntity<Test> createQuiz(@RequestBody Test test) {
         return new ResponseEntity<>(testService.save(test), HttpStatus.OK);
     }
+    @PutMapping("")
+    public ResponseEntity<Test> updateQuiz(@RequestParam Long id, @RequestBody Test test) {
+        Optional<Test> testOptional = testService.findById(id);
+        if (!testOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        test.setId(testOptional.get().getId());
+
+        return new ResponseEntity<>(testService.save(test), HttpStatus.OK);
+    }
+    @DeleteMapping("")
+    public ResponseEntity<Test> deleteQuiz(@RequestParam Long id) {
+        Optional<Test> testOptional = testService.findById(id);
+        if (!testOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        testService.remove(id);
+        return new ResponseEntity<>(testOptional.get(), HttpStatus.NO_CONTENT);
+    }
 }
