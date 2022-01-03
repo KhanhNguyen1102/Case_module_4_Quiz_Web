@@ -6,12 +6,10 @@ import com.example.case_module4_quizweb.sevice.answer.IAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -21,11 +19,24 @@ public class AnswerController {
     private IAnswerService answerService;
 
     @GetMapping("")
-    public ResponseEntity<Iterable<Answer>> findAllQuiz() {
+    public ResponseEntity<Iterable<Answer>> findAllAnswer() {
         List<Answer> answers = (List<Answer>) answerService.findAll();
         if (answers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(answers, HttpStatus.OK);
     }
+    @PostMapping("")
+    public ResponseEntity<Answer> findAnswerById(@RequestParam Long id) {
+        Optional<Answer> answerOptional = answerService.findById(id);
+        if (!answerOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Answer answer = answerOptional.get();
+        return new ResponseEntity<>(answer, HttpStatus.OK);
+    }
+//    @PostMapping("/create")
+//    public ResponseEntity<Answer> createQuiz(@RequestBody Answer answer) {
+//        return new ResponseEntity<>(answerService.save(answer), HttpStatus.OK);
+//    }
 }
