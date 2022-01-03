@@ -57,4 +57,5 @@ public class ResultController {
         resultService.remove(id);
         return new ResponseEntity<>(resultOptional.get(), HttpStatus.NO_CONTENT);
     }
+
 }
