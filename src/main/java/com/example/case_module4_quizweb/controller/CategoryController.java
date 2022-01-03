@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequestMapping("/api/categories")
 public class CategoryController {
     @Autowired
-    ICategoryService categoryService;
+    private ICategoryService categoryService;
 
     @GetMapping("")
     public ResponseEntity<Iterable<Category>> findAllCateGory() {
