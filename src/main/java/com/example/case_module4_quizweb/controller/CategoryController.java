@@ -18,7 +18,7 @@ public class CategoryController {
     ICategoryService categoryService;
 
     @GetMapping("")
-    public ResponseEntity<Iterable<Category>> findAllBlog() {
+    public ResponseEntity<Iterable<Category>> findAllCateGory() {
         List<Category> categories = (List<Category>) categoryService.findAll();
         if (categories.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -26,7 +26,7 @@ public class CategoryController {
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
     @PostMapping("")
-    public ResponseEntity<Category> findBlogById(@RequestParam Long id) {
+    public ResponseEntity<Category> findCategoryById(@RequestParam Long id) {
         Optional<Category> categoryOptional = categoryService.findById(id);
         if (!categoryOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -34,14 +34,14 @@ public class CategoryController {
         Category category = categoryOptional.get();
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
-//    @PutMapping("")
-//    public ResponseEntity<Category> updateBlog(@RequestParam Long id, @RequestBody Category category) {
-//        Optional<Category> categoryOptional = categoryService.findById(id);
-//        if (!categoryOptional.isPresent()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        category.setId(categoryOptional.get().getId());
-//
-//        return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
-//    }
+    @PutMapping("")
+    public ResponseEntity<Category> updateCategory(@RequestParam Long id, @RequestBody Category category) {
+        Optional<Category> categoryOptional = categoryService.findById(id);
+        if (!categoryOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        category.setId(categoryOptional.get().getId());
+
+        return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
+    }
 }
