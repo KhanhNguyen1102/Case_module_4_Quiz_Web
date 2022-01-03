@@ -35,8 +35,19 @@ public class AnswerController {
         Answer answer = answerOptional.get();
         return new ResponseEntity<>(answer, HttpStatus.OK);
     }
-//    @PostMapping("/create")
-//    public ResponseEntity<Answer> createQuiz(@RequestBody Answer answer) {
-//        return new ResponseEntity<>(answerService.save(answer), HttpStatus.OK);
-//    }
+    @PostMapping("/create")
+    public ResponseEntity<Answer> createAnswer(@RequestBody Answer answer) {
+        return new ResponseEntity<>(answerService.save(answer), HttpStatus.OK);
+    }
+    @PutMapping("")
+    public ResponseEntity<Answer> updateAnswer(@RequestParam Long id, @RequestBody Answer answer) {
+        Optional<Answer> answerOptional = answerService.findById(id);
+        if (!answerOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        answer.setId(answerOptional.get().getId());
+
+        return new ResponseEntity<>(answerService.save(answer), HttpStatus.OK);
+    }
+
 }
