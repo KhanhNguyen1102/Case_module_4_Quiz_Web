@@ -48,5 +48,13 @@ public class ResultController {
 
         return new ResponseEntity<>(resultService.save(result), HttpStatus.OK);
     }
-
+    @DeleteMapping("")
+    public ResponseEntity<Result> deleteQuiz(@RequestParam Long id) {
+        Optional<Result> resultOptional = resultService.findById(id);
+        if (!resultOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        resultService.remove(id);
+        return new ResponseEntity<>(resultOptional.get(), HttpStatus.NO_CONTENT);
+    }
 }
