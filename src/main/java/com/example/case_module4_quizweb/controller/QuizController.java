@@ -49,14 +49,14 @@ public class QuizController {
 
         return new ResponseEntity<>(quizService.save(quiz), HttpStatus.OK);
     }
-//
-//    @DeleteMapping("")
-//    public ResponseEntity<Quiz> deleteQuiz(@RequestParam Long id) {
-//        Optional<Quiz> quizOptional = quizService.findById(id);
-//        if (!quizOptional.isPresent()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        quizService.remove(id);
-//        return new ResponseEntity<>(quizOptional.get(), HttpStatus.NO_CONTENT);
-//    }
+
+    @DeleteMapping("")
+    public ResponseEntity<Quiz> deleteQuiz(@RequestParam Long id) {
+        Optional<Quiz> quizOptional = quizService.findById(id);
+        if (!quizOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        quizService.remove(id);
+        return new ResponseEntity<>(quizOptional.get(), HttpStatus.NO_CONTENT);
+    }
 }
