@@ -17,7 +17,6 @@
         }
 
 
-
         function displayUser(user) {
             let res = "";
             res += `<table border="1" cellpadding="5">
@@ -143,13 +142,12 @@
         }
 
 
-
         function deleteUser(id) {
             if (confirm("Are you sure")) {
                 $.ajax({
                     type: "DELETE",
                     url: "http://localhost:8080/api/users/" + id,
-                    success: function (user){
+                    success: function (user) {
                         allUser(user)
                     },
                     error: function (error) {
@@ -158,7 +156,7 @@
             }
         }
 
-        function viewUser(id){
+        function viewUser(id) {
             $.ajax({
                 type: "GET",
                 url: "http://localhost:8080/api/users/" + id,
@@ -209,11 +207,70 @@
             })
         }
 
+        function showFormEditUser(id) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/users/" + id,
+                success: function (user) {
+                    console.log(user)
+                    let form =
+                        "<p>username</p>" + `<input type="text" id="username" value="${user.username}">\n` + "<br>" +
+                        "<p>password</p>" + `<input type="text" id="password" value="${user.password}">\n` + "<br>" +
+                        "<p>confirmPassword</p>" + `<input type="text" id="confirmPassword" value="${user.confirmPassword}">\n` + "<br>" +
+                        "<p>fullName</p>" + `<input type="text" id="fullName" value="${user.fullName}">\n` + "<br>" +
+                        "<p>email</p>" + `<input type="text" id="email" value="${user.email}">\n` + "<br>" +
+                        "<p>dateOfBirth</p>" + `<input type="datetime-local" id="dateOfBirth" value="${user.dateOfBirth}">\n` + "<br>" +
+                        "<p>avatar</p>" + `<input type="text" id="avatar" value="${user.avatar}">\n` + "<br>" +
+                        "<p>address</p>" + `<input type="text" id="address" value="${user.address}">\n` + "<br>" +
+                        "<p>status</p>" + `<input type="text" id="status" value="${user.status}">\n` + "<br>" +
+                        `<button onclick="updatePost(${user.id})">Thay đổi</button>`
+
+                        console.log(form)
+                    document.getElementById("display").innerHTML = form;
+                }
+            })
+        }
 
 
-
-
-
+        function updatePost(id) {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+            let fullName = document.getElementById("fullName").value;
+            let email = document.getElementById("email").value;
+            let dateOfBirth = document.getElementById("dateOfBirth").value;
+            let avatar = document.getElementById("avatar").value;
+            let address = document.getElementById("address").value;
+            let status = document.getElementById("status").value;
+            let user = {
+                id: id,
+                username: username,
+                password: password,
+                confirmPassword: confirmPassword,
+                fullName: fullName,
+                email: email,
+                dateOfBirth: dateOfBirth,
+                avatar: avatar,
+                address: address,
+                status: status,
+            }
+            console.log(user)
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "PUT",
+                url: "http://localhost:8080/api/users/" + id,
+                data: JSON.stringify(user),
+                success: function (user) {
+                    allUser(user)
+                    alert("xong")
+                },
+                error: function (error) {
+                }
+            })
+        }
 
 
     </script>
