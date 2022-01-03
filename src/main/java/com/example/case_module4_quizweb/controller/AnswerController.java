@@ -49,5 +49,13 @@ public class AnswerController {
 
         return new ResponseEntity<>(answerService.save(answer), HttpStatus.OK);
     }
-
+    @DeleteMapping("")
+    public ResponseEntity<Answer> deleteAnswer(@RequestParam Long id) {
+        Optional<Answer> answerOptional = answerService.findById(id);
+        if (!answerOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        answerService.remove(id);
+        return new ResponseEntity<>(answerOptional.get(), HttpStatus.NO_CONTENT);
+    }
 }
