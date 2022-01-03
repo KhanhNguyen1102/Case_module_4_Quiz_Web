@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -30,6 +31,15 @@ public class UserController {
     public ResponseEntity<User> save(@RequestBody User user) {
         userService.save(user);
         return new ResponseEntity<>( HttpStatus.CREATED);
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
+        Optional<User> userOptional = userService.findById(id);
+        user.setId(userOptional.get().getId());
+        userService.save(user);
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 
 
