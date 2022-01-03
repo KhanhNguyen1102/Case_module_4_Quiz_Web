@@ -25,6 +25,7 @@ public class CategoryController {
         }
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
+
     @PostMapping("")
     public ResponseEntity<Category> findCategoryById(@RequestParam Long id) {
         Optional<Category> categoryOptional = categoryService.findById(id);
@@ -34,6 +35,12 @@ public class CategoryController {
         Category category = categoryOptional.get();
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
+
+    @PostMapping("/create")
+    public ResponseEntity<Category> createCategory(@RequestBody Category category ) {
+        return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
+    }
+
     @PutMapping("")
     public ResponseEntity<Category> updateCategory(@RequestParam Long id, @RequestBody Category category) {
         Optional<Category> categoryOptional = categoryService.findById(id);
@@ -44,4 +51,5 @@ public class CategoryController {
 
         return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
     }
+
 }
