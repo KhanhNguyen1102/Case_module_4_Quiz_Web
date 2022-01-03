@@ -18,7 +18,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    public ResponseEntity<Iterable<User>> findAllMode() {
+    public ResponseEntity<Iterable<User>> findAll() {
         List<User> users = (List<User>) userService.findAll();
         if (users.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
