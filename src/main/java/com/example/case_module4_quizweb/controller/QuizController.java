@@ -26,6 +26,7 @@ public class QuizController {
         }
         return new ResponseEntity<>(quizzes, HttpStatus.OK);
     }
+
     @PostMapping("")
     public ResponseEntity<Quiz> findQuizById(@RequestParam Long id) {
         Optional<Quiz> quizOptional = quizService.findById(id);
@@ -35,10 +36,12 @@ public class QuizController {
         Quiz quiz = quizOptional.get();
         return new ResponseEntity<>(quiz, HttpStatus.OK);
     }
+
     @PostMapping("/create")
-    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz){
+    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
         return new ResponseEntity<>(quizService.save(quiz), HttpStatus.OK);
     }
+
     @PutMapping("")
     public ResponseEntity<Quiz> updateQuiz(@RequestParam Long id, @RequestBody Quiz quiz) {
         Optional<Quiz> quizOptional = quizService.findById(id);
