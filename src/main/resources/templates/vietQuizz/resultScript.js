@@ -190,3 +190,47 @@ function updateResult(id) {
         }
     })
 }
+
+function deleteResult(id) {
+    if (confirm("Are you sure")) {
+        $.ajax({
+            type: "DELETE",
+            url: "http://localhost:8080/api/results?id=" + id,
+            success: getALLResult,
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    } else {
+    }
+}
+
+function viewResult(id) {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/api/results?id=" + id,
+        success: function (result) {
+            console.log(result)
+            let view = `<table cellpadding="5">
+                                    <tr>
+                                        <th>Score: </th>
+                                        <td>${result.score}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>User: </th>
+                                        <td>ID: ${result.user.id}</td>
+                                        <td>Tên: ${result.user.fullName}</td>
+                                        <td>Ngày Sinh: ${result.user.dateOfBirth}</td>
+                                        <td>Email: ${result.user.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Test: </th>
+                                        <td>${result.test.name}</td>
+                                        <td>Trạng thái : ${result.test.status}</td>
+                                    </tr>
+                                </table>`;
+            console.log(view)
+            document.getElementById("listAnswer").innerHTML = view;
+        }
+    })
+}
