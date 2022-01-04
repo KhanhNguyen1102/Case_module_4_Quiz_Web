@@ -12,10 +12,7 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
-    @Override
-    public void save(User user) {
-        userRepository.save(user);
-    }
+
 
     @Override
     public Iterable<User> findAll() {
@@ -25,6 +22,11 @@ public class UserService implements IUserService {
     @Override
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     @Override

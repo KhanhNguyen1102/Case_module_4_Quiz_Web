@@ -1,4 +1,4 @@
-package com.example.case_module4_quizweb.sevice.quiz;
+package com.example.case_module4_quizweb.service.quiz;
 
 import com.example.case_module4_quizweb.model.Quiz;
 import com.example.case_module4_quizweb.repository.QuizRepository;

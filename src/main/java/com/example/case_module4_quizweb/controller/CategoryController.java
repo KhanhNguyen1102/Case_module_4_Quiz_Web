@@ -1,7 +1,7 @@
 package com.example.case_module4_quizweb.controller;
 
 import com.example.case_module4_quizweb.model.Category;
-import com.example.case_module4_quizweb.sevice.category.ICategoryService;
+import com.example.case_module4_quizweb.service.category.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
