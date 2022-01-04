@@ -98,3 +98,43 @@ function saveTest() {
 }
 
 
+function deleteTest(id) {
+    if (confirm("Are you sure")) {
+        $.ajax({
+            type: "DELETE",
+            url: "http://localhost:8080/api/tests?id=" + id,
+            success: function (test) {
+                allUser(test)
+            },
+            error: function (error) {
+            }
+        })
+    }
+}
+
+function viewTest(id) {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/api/tests?id=" + id,
+        success: function (test) {
+            console.log(test)
+            let view = `<table cellpadding="5">
+                                    <tr>
+                                        <th>name: </th>
+                                        <td>${test.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>status: </th>
+                                        <td>${test.status}</td>
+                                    </tr>
+                                      <tr>
+                                        <th>username: </th>
+                                        <td>${test.user.fullName}</td>
+                                    </tr>
+                                </table>`;
+            console.log(view)
+
+            document.getElementById("display").innerHTML = view;
+        }
+    })
+}
