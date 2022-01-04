@@ -61,13 +61,15 @@ function deleteQuiz(id) {
         $.ajax({
             type: "DELETE",
             url: "http://localhost:8080/api/quizzes?id=" + id,
-            success: getALLQuiz(),
+            success: getALLQuiz,
             error: function (error) {
                 console.log(error)
             }
         })
-    }else {}
+    } else {
+    }
 }
+
 function showFormEditQuiz(id) {
     $.ajax({
         type: "POST",
@@ -90,7 +92,7 @@ function showFormEditQuiz(id) {
                         form += `<option value="${category[i].id}">${category[i].name}</option>`
                     }
                     form += `</select>`
-                        + `<button onclick="updateQuiz(${quiz.id})">Thay đổi</button>`+'<br>'
+                        + `<button onclick="updateQuiz(${quiz.id})">Thay đổi</button>` + '<br>'
                     console.log(form)
                     document.getElementById("listQuiz").innerHTML = form;
                 }
@@ -98,13 +100,14 @@ function showFormEditQuiz(id) {
         }
     })
 }
+
 function updateQuiz(id) {
     let content = document.getElementById("content").value;
     let value = document.getElementById("value").value;
     let status = document.getElementById("status").value;
     let category = document.getElementById("category").value;
     let quiz = {
-        content:content,
+        content: content,
         category: {
             "id": category
         },
@@ -126,6 +129,7 @@ function updateQuiz(id) {
         }
     })
 }
+
 function formCreate() {
     $.ajax({
         type: "GET",
