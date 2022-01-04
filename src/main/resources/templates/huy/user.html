@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function allUser() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/accounts",
+                success: function (hi) {
+                    console.log(hi)
+                    displayUser(hi)
+                }
+            })
+        }
+
+
+        function displayUser(user) {
+            let res = "";
+            res += `<table border="1" cellpadding="5">
+                <tr>
+                    <th>username</th>
+                    <th>password</th>
+                    <th>confirm password</th>
+                    <th>enabled</th>
+                    <th>fullName</th>
+                    <th>email</th>
+                    <th>dateOfBirth</th>
+                    <th>avatar</th>
+                    <th>address</th>
+                    <th>status</th>
+                    <th colspan="3">Action</th>
+                </tr>`
+            for (let i = 0; i < user.length; i++) {
+                res += `<tr>
+                    <td> ${user[i].username}</td>
+                    <td> ${user[i].password}</t d>
+                    <td> ${user[i].confirmPassword}</td>
+                    <td> ${user[i].enabled}</td>
+                    <td> ${user[i].fullName}</td>
+                    <td> ${user[i].email}</td>
+                    <td> ${user[i].dateOfBirth}</td>
+                    <td> ${user[i].avatar}</td>
+                    <td> ${user[i].address}</td>
+                    <td> ${user[i].status}</td>
+
+                    <td><button onclick="viewUser(${user[i].id})">View</button></td>
+                    <td><button onclick="showFormEditUser(${user[i].id})">Edit</button></td>
+                    <td><button onclick="deleteUser(${user[i].id})">Delete</button></td>
+                        </tr>`
+            }
+            res += `</table>`
+            document.getElementById("display").innerHTML = res;
+        }
+
+
+        function formCreate() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/accounts",
+                success: function (users) {
+                    console.log(users);
+                    let form = `<table cellpadding="5">
+                            <tr>
+                                <th>username: </th>
+                                <td><input type="text" id="username"></td>
+                            </tr>
+
+                            <tr>
+                                <th>password: </th>
+                                <td><input type="text" id="password"></td>
+                            </tr>
+                            <tr>
+                                <th>confirmPassword: </th>
+                                <td><input type="text" id="confirmPassword"></td>
+                            </tr>
+                           <tr>
+                                <th>fullName: </th>
+                                <td><input type="text" id="fullName"></td>
+                            </tr>
+                           <tr>
+                                <th>email: </th>
+                                <td><input type="text" id="email"></td>
+                            </tr>
+                           <tr>
+                                <th>dateOfBirth: </th>
+                                <td><input type="datetime-local" id="dateOfBirth"></td>
+                            </tr>
+                           <tr>
+                                <th>avatar: </th>
+                                <td><input type="text" id="avatar"></td>
+                            </tr>
+                           <tr>
+                                <th>address: </th>
+                                <td><input type="text" id="address"></td>
+                            </tr>
+                            <tr>
+                                <th>status: </th>
+                                <td><input type="text" id="status"></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td><button onclick="saveUser()">Save</button></td>
+                            </tr>
+                        </table>`;
+                    document.getElementById("display").innerHTML = form;
+                }
+            })
+        }
+
+        function saveUser() {
+            let user = {
+                "username": document.getElementById("username").value,
+                "password": document.getElementById("password").value,
+                "confirmPassword": document.getElementById("confirmPassword").value,
+                "fullName": document.getElementById("fullName").value,
+                "email": document.getElementById("email").value,
+                "dateOfBirth": document.getElementById("dateOfBirth").value,
+                "avatar": document.getElementById("avatar").value,
+                "address": document.getElementById("address").value,
+                "status": document.getElementById("status").value,
+            }
+            console.log(user)
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                url: "http://localhost:8080/api/accounts/save",
+                data: JSON.stringify(user),
+                success: function (user) {
+                    alert("Thêm Thành Công")
+                    allUser(user);
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        }
+
+
+        function deleteUser(id) {
+            if (confirm("Are you sure")) {
+                $.ajax({
+                    type: "DELETE",
+                    url: "http://localhost:8080/api/accounts/" + id,
+                    success: function (user) {
+                        allUser(user)
+                    },
+                    error: function (error) {
+                    }
+                })
+            }
+        }
+
+        function viewUser(id) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/accounts/" + id,
+                success: function (user) {
+                    console.log(user)
+                    let view = `<table cellpadding="5">
+                                    <tr>
+                                        <th>username: </th>
+                                        <td>${user.username}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>password: </th>
+                                        <td>${user.password}</td>
+                                    </tr>
+                                      <tr>
+                                        <th>confirmPassword: </th>
+                                        <td>${user.confirmPassword}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>fullName: </th>
+                                        <td>${user.fullName}</td>
+                                    </tr>
+                                      <tr>
+                                        <th>email: </th>
+                                        <td>${user.email}</td>
+                                    </tr>
+                                  <tr>
+                                        <th>dateOfBirth: </th>
+                                        <td>${user.dateOfBirth}</td>
+                                    </tr>
+                                  <tr>
+                                        <th>avatar: </th>
+                                        <td>${user.avatar}</td>
+                                    </tr>
+                                  <tr>
+                                        <th>address: </th>
+                                        <td>${user.address}</td>
+                                    </tr>
+                                  <tr>
+                                        <th>status: </th>
+                                        <td>${user.status}</td>
+                                    </tr>
+                                </table>`;
+                    console.log(view)
+
+                    document.getElementById("display").innerHTML = view;
+                }
+            })
+        }
+
+        function showFormEditUser(id) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/accounts/" + id,
+                success: function (user) {
+                    console.log(user)
+                    let form =
+                        "<p>username</p>" + `<input type="text" id="username" value="${user.username}">\n` + "<br>" +
+                        "<p>password</p>" + `<input type="text" id="password" value="${user.password}">\n` + "<br>" +
+                        "<p>confirmPassword</p>" + `<input type="text" id="confirmPassword" value="${user.confirmPassword}">\n` + "<br>" +
+                        "<p>fullName</p>" + `<input type="text" id="fullName" value="${user.fullName}">\n` + "<br>" +
+                        "<p>email</p>" + `<input type="text" id="email" value="${user.email}">\n` + "<br>" +
+                        "<p>dateOfBirth</p>" + `<input type="datetime-local" id="dateOfBirth" value="${user.dateOfBirth}">\n` + "<br>" +
+                        "<p>avatar</p>" + `<input type="text" id="avatar" value="${user.avatar}">\n` + "<br>" +
+                        "<p>address</p>" + `<input type="text" id="address" value="${user.address}">\n` + "<br>" +
+                        "<p>status</p>" + `<input type="text" id="status" value="${user.status}">\n` + "<br>" +
+                        `<button onclick="updatePost(${user.id})">Thay đổi</button>`
+
+                        console.log(form)
+                    document.getElementById("display").innerHTML = form;
+                }
+            })
+        }
+
+
+        function updatePost(id) {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+            let fullName = document.getElementById("fullName").value;
+            let email = document.getElementById("email").value;
+            let dateOfBirth = document.getElementById("dateOfBirth").value;
+            let avatar = document.getElementById("avatar").value;
+            let address = document.getElementById("address").value;
+            let status = document.getElementById("status").value;
+            let user = {
+                id: id,
+                username: username,
+                password: password,
+                confirmPassword: confirmPassword,
+                fullName: fullName,
+                email: email,
+                dateOfBirth: dateOfBirth,
+                avatar: avatar,
+                address: address,
+                status: status,
+            }
+            console.log(user)
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "PUT",
+                url: "http://localhost:8080/api/accounts/" + id,
+                data: JSON.stringify(user),
+                success: function (user) {
+                    allUser(user)
+                    alert("xong")
+                },
+                error: function (error) {
+                }
+            })
+        }
+
+
+    </script>
+</head>
+<body>
+<button onclick="allUser()">user</button>
+<button onclick="formCreate()">add</button>
+<button onclick="allTest()">test</button>
+<button onclick="formCreateTest()">addTest</button>
+<div id="display"></div>
+<script src="testScript.js"></script>
+</body>
+</html>
