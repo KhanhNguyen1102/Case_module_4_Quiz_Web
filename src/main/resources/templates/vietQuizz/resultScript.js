@@ -153,7 +153,7 @@ function showFormEditResult(id) {
                         form += `<option value="${test[i].id}">${test[i].name}</option>`
                     }
                     form += `</select>`
-                        + `<button onclick="updateResult(${result.id})">Thay đổi</button>` + '<br>'
+                        + `<button onclick="upeResult(${result.id})">Thay đổi</button>` + '<br>'
                     console.log(form)
                     document.getElementById("listResult").innerHTML = form;
                 }
