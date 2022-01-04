@@ -138,3 +138,48 @@ function viewTest(id) {
         }
     })
 }
+
+
+function showFormEditTest(id) {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/api/tests?id=" + id,
+        success: function (test) {
+            console.log(test)
+                    let form =
+                        "<p>Name</p>" + `<input type="text" id="name" value="${test.name}">\n` + "<br>" +
+                        "<p>status</p>" + `<input type="text" id="status" value="${test.status}">\n` + "<br>" +
+                        "<p>User</p>" + `<input type="text" id="user" value="${test.user.id}">\n` + "<br>" +
+                         `<button onclick="updateTest(${test.id})">Thay đổi</button>` + '<br>'
+                    console.log(form)
+                    document.getElementById("display").innerHTML = form;
+                }
+    })
+}
+
+function updateTest(id) {
+    let name = document.getElementById("name").value;
+    let status = document.getElementById("status").value;
+    let user = document.getElementById("user").value;
+    let test = {
+        name: name,
+        status: status,
+        user: {
+            "id": user
+        }
+    }
+    console.log(test)
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: "PUT",
+        url: "http://localhost:8080/api/tests?id=" + id,
+        data: JSON.stringify(test),
+        success: alert("Sứa thành công"),
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
