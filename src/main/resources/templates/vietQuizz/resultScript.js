@@ -226,11 +226,11 @@ function viewResult(id) {
                                     <tr>
                                         <th>Test: </th>
                                         <td>${result.test.name}</td>
-                                        <td>Trạng thái : ${result.test.status}</td>
+                                        <td>Trạng thái: ${result.test.status}</td>
                                     </tr>
                                 </table>`;
             console.log(view)
-            document.getElementById("listAnswer").innerHTML = view;
+            document.getElementById("listResult").innerHTML = view;
         }
     })
 }
