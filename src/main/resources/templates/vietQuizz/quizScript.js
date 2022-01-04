@@ -46,7 +46,7 @@ function displayQuiz(array) {
     <td> ${array[i].category.name}</td>
     <td> ${array[i].value}</td>
     <td> ${array[i].status}</td>
-    <td><button onclick="viewBlog(${array[i].id})">View</button></td>
+    <td><button onclick="viewQuiz(${array[i].id})">View</button></td>
     <td><button onclick="showFormEditQuiz(${array[i].id})">Edit</button></td>
     <td><button onclick="deleteQuiz(${array[i].id})">Delete</button></td>
 </tr>`
@@ -85,7 +85,6 @@ function showFormEditQuiz(id) {
                         "<p>Content</p>" + `<input type="text" id="content" value="${quiz.content}">\n` + "<br>" +
                         "<p>Value</p>" + `<input type="text" id="value" value="${quiz.value}">\n` + "<br>" +
                         "<p>Status</p>" + `<input type="text" id="status" value="${quiz.status}">\n` + "<br>" +
-                        `<input type="hidden" id="time" value="${quiz.time}">\n` +
                         "<p>Category</p>" + `<select  id="category">
                                  <option value="${quiz.category.id}"> ${quiz.category.name}</option>`
                     for (let i = 0; i < category.length; i++) {
@@ -130,7 +129,7 @@ function updateQuiz(id) {
     })
 }
 
-function formCreate() {
+function formCreateQuiz() {
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/api/categories",
@@ -198,3 +197,32 @@ function saveQuiz() {
     })
 }
 
+function viewQuiz(id) {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/api/quizzes?id=" + id,
+        success: function (quiz) {
+            console.log(quiz)
+            let view = `<table cellpadding="5">
+                                    <tr>
+                                        <th>Content: </th>
+                                        <td>${quiz.content}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Category: </th>
+                                        <td>${quiz.category.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Value: </th>
+                                        <td>${quiz.value}</td>
+                                    </tr> 
+                                    <tr>
+                                        <th>Status: </th>
+                                        <td>${quiz.status}</td>
+                                    </tr>
+                                </table>`;
+            console.log(view)
+            document.getElementById("listQuiz").innerHTML = view;
+        }
+    })
+}

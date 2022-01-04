@@ -5,14 +5,19 @@
     <title>Title</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+
 </head>
 <body>
 <button onclick="getALLQuiz()">Hiện danh sách quizz</button>
-<button onclick="formCreate()">Thêm Mới</button>
-<!--<select id="category" ></select>-->
+<button onclick="formCreateQuiz()">Thêm Mới</button>
 <hr>
 <div id="listQuiz">
 </div>
-<script src="script.js"></script>
+<hr>
+<button onclick="getALLAnswer()">Hiện danh sách Answer</button>
+<button onclick="formCreateAnswer()">Thêm Mới Anser</button>
+<div id="listAnswer"></div>
+<script src="quizScript.js"></script>
+<script src="answerScript.js"></script>
 </body>
 </html>
