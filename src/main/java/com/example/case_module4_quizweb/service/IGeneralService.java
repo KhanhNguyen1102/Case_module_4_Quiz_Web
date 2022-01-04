@@ -1,4 +1,4 @@
-package com.example.case_module4_quizweb.sevice;
+package com.example.case_module4_quizweb.service;
 
 import java.util.Optional;
 

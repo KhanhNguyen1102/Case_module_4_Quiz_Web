@@ -1,7 +1,7 @@
 package com.example.case_module4_quizweb.controller;
 
 import com.example.case_module4_quizweb.model.Result;
-import com.example.case_module4_quizweb.sevice.result.IResultService;
+import com.example.case_module4_quizweb.service.result.IResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
