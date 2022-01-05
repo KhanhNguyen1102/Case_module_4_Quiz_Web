@@ -1,8 +1,12 @@
 package com.example.case_module4_quizweb.controller;
 
+import com.example.case_module4_quizweb.model.Quiz;
 import com.example.case_module4_quizweb.model.User;
 import com.example.case_module4_quizweb.service.user.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +29,14 @@ AccountService accountService;
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<User>> findAll(@PageableDefault(size = 10) Pageable pageable) {
+        Page<User> users = accountService.findAll(pageable);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
 
     @PostMapping("/save")
     public ResponseEntity<User> save(@RequestBody User user) {
