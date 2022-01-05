@@ -3,6 +3,8 @@ package com.example.case_module4_quizweb.service.test;
 import com.example.case_module4_quizweb.model.Test;
 import com.example.case_module4_quizweb.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,6 +17,11 @@ public class TestService implements ITestService {
     @Override
     public Iterable<Test> findAll() {
         return testRepository.findAll();
+    }
+
+    @Override
+    public Page<Test> findAll(Pageable pageable) {
+        return testRepository.findAll(pageable);
     }
 
     @Override
@@ -31,4 +38,5 @@ public class TestService implements ITestService {
     public void remove(Long id) {
         testRepository.deleteById(id);
     }
+
 }
