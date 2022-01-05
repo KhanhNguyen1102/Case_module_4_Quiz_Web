@@ -3,6 +3,8 @@ package com.example.case_module4_quizweb.service.answer;
 import com.example.case_module4_quizweb.model.Answer;
 import com.example.case_module4_quizweb.repository.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,6 +21,11 @@ public class AnswerService implements IAnswerService {
     }
 
     @Override
+    public Page<Answer> findAll(Pageable pageable) {
+        return answerRepository.findAll(pageable);
+    }
+
+    @Override
     public Optional<Answer> findById(Long id) {
         return answerRepository.findById(id);
     }
@@ -32,4 +39,6 @@ public class AnswerService implements IAnswerService {
     public void remove(Long id) {
         answerRepository.deleteById(id);
     }
+
+
 }

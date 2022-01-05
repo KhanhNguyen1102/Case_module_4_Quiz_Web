@@ -22,7 +22,15 @@ public class ResultController {
     private IResultService resultService;
 
     @GetMapping("")
-    public ResponseEntity<Iterable<Result>> findAllResult(@PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<Iterable<Result>> findAllResult() {
+        List<Result> results = (List<Result>) resultService.findAll();
+        if (results.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+    @GetMapping("/page")
+    public ResponseEntity<Page<Result>> findAllResult(@PageableDefault(size = 10) Pageable pageable) {
         Page<Result> results = resultService.findAll(pageable);
         if (results.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
