@@ -20,6 +20,10 @@ public class ResultService implements IResultService {
     }
 
     @Override
+    public Page<Result> findAll(Pageable pageable) {
+        return resultRepository.findAll(pageable);
+    }
+    @Override
     public Optional<Result> findById(Long id) {
         return resultRepository.findById(id);
     }
@@ -37,10 +41,5 @@ public class ResultService implements IResultService {
     @Override
     public Iterable<Result> findTop3Score() {
         return resultRepository.findTop3Score();
-    }
-
-    @Override
-    public Page<Result> findAll(Pageable pageable) {
-        return resultRepository.findAll(pageable);
     }
 }
