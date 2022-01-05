@@ -5,6 +5,9 @@ import com.example.case_module4_quizweb.model.Quiz;
 import com.example.case_module4_quizweb.model.User;
 import com.example.case_module4_quizweb.service.quiz.IQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,12 @@ public class QuizController {
         if (quizzes.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity<>(quizzes, HttpStatus.OK);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<Quiz>> findAll(@PageableDefault(size = 10) Pageable pageable) {
+        Page<Quiz> quizzes = quizService.findAll(pageable);
         return new ResponseEntity<>(quizzes, HttpStatus.OK);
     }
 
