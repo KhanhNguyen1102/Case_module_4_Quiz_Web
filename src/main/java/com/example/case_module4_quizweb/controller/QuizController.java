@@ -2,6 +2,7 @@ package com.example.case_module4_quizweb.controller;
 
 
 import com.example.case_module4_quizweb.model.Quiz;
+import com.example.case_module4_quizweb.model.User;
 import com.example.case_module4_quizweb.service.quiz.IQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,4 +63,12 @@ public class QuizController {
         quizService.remove(id);
         return new ResponseEntity<>(quizOptional.get(), HttpStatus.NO_CONTENT);
     }
+
+
+
+    @GetMapping("/search")
+    public ResponseEntity<Iterable<Quiz>> search(@RequestParam String category){
+        return new ResponseEntity<>(quizService.findByCategory(category), HttpStatus.ACCEPTED);
+    }
+
 }

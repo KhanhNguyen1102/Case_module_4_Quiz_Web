@@ -31,4 +31,10 @@ public class QuizService implements IQuizService {
     public void remove(Long id) {
             quizRepository.deleteById(id);
     }
+
+
+    @Override
+    public Iterable<Quiz> findByCategory(String category) {
+            return quizRepository.findByCategory(category);
+    }
 }
