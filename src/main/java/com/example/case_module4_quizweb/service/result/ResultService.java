@@ -3,6 +3,8 @@ package com.example.case_module4_quizweb.service.result;
 import com.example.case_module4_quizweb.model.Result;
 import com.example.case_module4_quizweb.repository.ResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,6 +20,10 @@ public class ResultService implements IResultService {
     }
 
     @Override
+    public Page<Result> findAll(Pageable pageable) {
+        return resultRepository.findAll(pageable);
+    }
+    @Override
     public Optional<Result> findById(Long id) {
         return resultRepository.findById(id);
     }
@@ -30,5 +36,10 @@ public class ResultService implements IResultService {
     @Override
     public void remove(Long id) {
         resultRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<Result> findTop3Score() {
+        return resultRepository.findTop3Score();
     }
 }

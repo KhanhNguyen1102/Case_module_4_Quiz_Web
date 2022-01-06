@@ -31,7 +31,7 @@ function getAllQuiz() {
 function displayQuiz(array) {
     let res = "";
     res += `<hr>
-        <select id="category" ></select>
+        <select id="category"  ></select>
         
             <hr>`
     res += `<table border="1" cellpadding="5">
@@ -63,6 +63,7 @@ function deleteQuiz(id) {
         $.ajax({
             type: "DELETE",
             url: "http://localhost:8080/api/quizzes?id=" + id,
+            headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
             success: getALLQuiz,
             error: function (error) {
                 console.log(error)
@@ -76,6 +77,7 @@ function showFormEditQuiz(id) {
     $.ajax({
         type: "POST",
         url: "http://localhost:8080/api/quizzes?id=" + id,
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
         success: function (quiz) {
             console.log(quiz)
             $.ajax({
@@ -123,6 +125,7 @@ function updateQuiz(id) {
         },
         type: "PUT",
         url: "http://localhost:8080/api/quizzes?id=" + id,
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
         data: JSON.stringify(quiz),
         success: alert("Sứa thành công"),
         error: function (error) {
@@ -135,6 +138,7 @@ function formCreateQuiz() {
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/api/categories",
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
         success: function (category) {
             console.log(category);
             let form = `<table cellpadding="5">
@@ -188,6 +192,7 @@ function saveQuiz() {
         },
         type: "POST",
         url: "http://localhost:8080/api/quizzes/create",
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
         data: JSON.stringify(quiz),
         success: function () {
             alert("Thêm Thành Công")
@@ -203,6 +208,7 @@ function viewQuiz(id) {
     $.ajax({
         type: "POST",
         url: "http://localhost:8080/api/quizzes?id=" + id,
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
         success: function (quiz) {
             console.log(quiz)
             let view = `<table cellpadding="5">

@@ -3,6 +3,10 @@ package com.example.case_module4_quizweb.controller;
 import com.example.case_module4_quizweb.model.Result;
 import com.example.case_module4_quizweb.service.result.IResultService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,30 @@ public class ResultController {
     @GetMapping("")
     public ResponseEntity<Iterable<Result>> findAllResult() {
         List<Result> results = (List<Result>) resultService.findAll();
+        if (results.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+    @GetMapping("/page")
+    public ResponseEntity<Page<Result>> findAllResult(@PageableDefault(size = 10) Pageable pageable) {
+        Page<Result> results = resultService.findAll(pageable);
+        if (results.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+    @GetMapping("/sort")
+    public ResponseEntity<Iterable<Result>> findAllSortByScore(@PageableDefault(size = 10,direction = Sort.Direction.DESC,sort = "score")Pageable pageable) {
+        Page<Result> results =  resultService.findAll(pageable);
+        if (results.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+    @GetMapping("/top3")
+    public ResponseEntity<Iterable<Result>> findTop3Score() {
+        List<Result> results = (List<Result>) resultService.findTop3Score();
         if (results.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

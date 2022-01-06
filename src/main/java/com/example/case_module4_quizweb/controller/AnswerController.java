@@ -3,6 +3,9 @@ package com.example.case_module4_quizweb.controller;
 import com.example.case_module4_quizweb.model.Answer;
 import com.example.case_module4_quizweb.service.answer.IAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +23,14 @@ public class AnswerController {
     @GetMapping("")
     public ResponseEntity<Iterable<Answer>> findAllAnswer() {
         List<Answer> answers = (List<Answer>) answerService.findAll();
+        if (answers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(answers, HttpStatus.OK);
+    }
+    @GetMapping("/page")
+    public ResponseEntity<Page<Answer>> findAllAnswer(@PageableDefault(size = 10) Pageable pageable) {
+        Page<Answer> answers = answerService.findAll(pageable);
         if (answers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
