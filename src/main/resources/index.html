@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Edumark</title>
+    <title>Quizzzz</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -26,6 +26,10 @@
     <link rel="stylesheet" href="css/slicknav.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="templates/susu/user.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+
+
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 
@@ -57,11 +61,17 @@
                                         <li><a href="Courses.html">Random Quiz</a></li>
                                         <li><a href="#">Category <i class="ti-angle-down"></i></a>
                                             <ul class="submenu">
-                                                <li><a href="course_details.html">course details</a></li>
-                                                <li><a href="elements.html">elements</a></li>
+                                                <li><a href="temp/course_details.html">course details</a></li>
+                                                <li><a href="temp/elements.html">elements</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="about.html">About</a></li>
+                                        <li><a href="#">Test <i class="ti-angle-down"></i></a>
+                                            <ul class="submenu">
+                                                <li><a href="temp/course_details.html">course details</a></li>
+                                                <li><a href="temp/elements.html">elements</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="temp/about.html">About</a></li>
 <!--                                        <li><a href="#">blog <i class="ti-angle-down"></i></a>-->
 <!--                                            <ul class="submenu">-->
 <!--                                                <li><a href="blog.html">blog</a></li>-->
@@ -79,11 +89,11 @@
                                     <i class="flaticon-user"></i>
                                     <span>log in</span>
                                 </a>
-                                <div class="live_chat_btn">
-                                    <a class="boxed_btn_orange" href="#">
-                                        <i class="fa fa-phone"></i>
-                                        <span>+10 378 467 3672</span>
-                                    </a>
+                                <div id="logoubtn" class="live_chat_btn">
+<!--                                    <a onclick="logout()" class="boxed_btn_orange" href="#">-->
+<!--                                        <i class="fas fa-sign-out-alt"></i>-->
+<!--                                        <span>Logout</span>-->
+<!--                                    </a>-->
                                 </div>
                             </div>
                         </div>
@@ -112,7 +122,7 @@
                             <h3>Just play ! <br>
                                 Have fun !<br>
                                 Enjoy the game !</h3>
-                            <a href="#" class="boxed_btn">Let's go</a>
+                            <a href="#manage" class="boxed_btn">Let's go</a>
                         </div>
                     </div>
                 </div>
@@ -1697,7 +1707,128 @@
 <!--    </div>-->
 <!--    &lt;!&ndash; popular_courses_end&ndash;&gt;-->
 
+    <div id="manage" class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-radius: 5px">
+            <div class="container-fluid">
+                <div>
+                    <a class="h3 mb-3" style="text-decoration: none; color: black" >
+                        <img src="https://img.icons8.com/ios/2x/todo-list--v2.gif" height="35" width="35" > My Activities
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <br>
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-xl-1">
+                    <div class="card" style="height: 750px">
+                        <div class="card-header pb-0" style="padding-left: 15px;padding-right: 15px">
+                            <h6><b>Choices</b></h6>
+                            <hr>
+                        </div>
+                        <div class="card-body">
+                            <a href="#" class="w-50 pl-3"  style="padding: 10px 10px 10px 10px" title="Shortcut to random test">
+                                <div class="card border-0 border-bottom-green shadow-lg shadow-hover" style="border-radius: 50%">
+                                    <div >
+                                        <i class="fa fa-2x fa-dice my-1" style="color: #5555f5"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <a  class="w-50 pl-3"  style="padding: 10px 10px 10px 10px" title="Shortcut to Test">
+                                <div class="card border-0 border-bottom-green shadow-lg shadow-hover" style="border-radius: 50%">
+                                    <div >
+                                        <i onclick="allTest()" class="fa fa-2x fa-pencil-ruler my-1" style="color: #f55555"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <a  class="w-50 pl-3"  style="padding: 10px 10px 10px 10px" title="Shortcut Question Management">
+                                <div class="card border-0 border-bottom-green shadow-lg shadow-hover" style="border-radius: 50%" >
+                                    <div >
+                                        <i onclick="getAllQuiz()" class="fa fa-2x fa-question-circle my-1" style="color: #ffe05b"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <a  class="w-50 pl-3"  style="padding: 10px 10px 10px 10px" title="Shortcut User Management">
+                                <div class="card border-0 border-bottom-green shadow-lg shadow-hover" style="border-radius: 50%">
+                                    <div >
 
+                                        <i onclick="findAllAcc()" class="fa fa-2x fa-users my-1"></i>
+
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#" class="w-50 pl-3"  style="padding: 10px 10px 10px 10px">
+                                <div class="card border-0 border-bottom-green shadow-lg shadow-hover" style="border-radius: 50%">
+                                    <div >
+                                        <i class="fa fa-2x fa-list my-1" style="color: #ed6dfd"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#" class="w-50 pl-3"  style="padding: 10px 10px 10px 10px" title="Shortcut Home">
+                            <div class="card border-0 border-bottom-green shadow-lg shadow-hover" style="border-radius: 50%">
+                                <div >
+                                    <i class="fa fa-2x fa-home my-1" style="color: #80ff4f"></i>
+                                </div>
+                            </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8">
+
+                    <div class="card" style="height: 750px">
+                        <div class="card-header pb-0">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="card-title mb-0"><img src="https://img.icons8.com/ios/2x/double-tap-gesture.gif" height="30" width="30"> Click on the lines to see detailed information</h5>
+                                    <div id="result" style="padding: 10px 10px 10px 10px "></div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="select-container">
+                                        <form class="d-flex">
+                                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="key">
+                                            <a class="btn btn-outline-success" type="submit" onclick="searchQuiz()">
+                                                Search
+                                            </a></br>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-success" style="width: 100%" onclick="showFormCreateQuiz()">New Quiz</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 id="notification" style="text-align: center"></h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="listQuiz">
+                                <center>
+                                <img width="100%" src="https://i.pinimg.com/originals/1e/3e/37/1e3e3738d81b9db4f6b6505b236a996a.gif" alt="">
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3" >
+                    <div class="card"  style=" height: 750px;padding: 15px 15px 15px 15px">
+                        <div class="card" id="rightTop" style="padding: 15px 15px 15px 15px;border: #efeff6 solid;border-radius: 10px"></div>
+                        <div class="card" style="padding: 15px 15px 15px 15px">
+                            <div class="row" id="rightMid">
+                            </div>
+                        </div>
+                        <div class="card" style="padding: 15px 15px 15px 15px ">
+                            <div class="row" id="rightBot">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
 
     <!-- footer -->
@@ -1709,34 +1840,34 @@
                         <div class="footer_widget">
                             <div class="footer_logo">
                                 <a href="#">
-                                    <img src="img/logo.png" alt="">
+                                    <img src="img/logo2.png" width="80" height="80" alt="">
                                 </a>
                             </div>
                             <p>
-                                Firmament morning sixth subdue darkness creeping gathered divide our let god moving.
-                                Moving in fourth air night bring upon it beast let you dominion likeness open place day
-                                great.
+                                Help every one confidently learn anything,
+                                no matter what they’re striving to achieve.
+                                Use Quiz to study or to have fun depends on your choice!
                             </p>
                             <div class="socail_links">
                                 <ul>
                                     <li>
                                         <a href="#">
-                                            <i class="ti-facebook"></i>
+                                            <i class="fab fa-facebook-square"></i>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <i class="ti-twitter-alt"></i>
+                                            <i class="fab fa-twitter"></i>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <i class="fa fa-instagram"></i>
+                                            <i class="fab fa-instagram"></i>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <i class="fa fa-youtube-play"></i>
+                                            <i class="fab fa-youtube"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -1779,9 +1910,9 @@
                                 Address
                             </h3>
                             <p>
-                                200, D-block, Green lane USA <br>
-                                +10 367 467 8934 <br>
-                                edumark@contact.com
+                                C0821I1  <br>
+                                CodeGym <br>
+                                codegym@edu.com
                             </p>
                         </div>
                     </div>
@@ -1812,10 +1943,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             <div class="popup_inner">
                 <div class="logo text-center">
                     <a href="#">
-                        <img src="img/form-logo.png" alt="">
+                        <img src="img/logo2.png" width="100" height="100" alt="">
                     </a>
                 </div>
                 <h3>Sign in</h3>
+                <div id="wrongAcc">
+
+                </div>
                 <form action="#">
                     <div class="row">
                         <div class="col-xl-12 col-md-12">
@@ -1842,23 +1976,26 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             <div class="popup_inner">
                 <div class="logo text-center">
                     <a href="#">
-                        <img src="img/form-logo.png" alt="">
+                        <img src="img/logo2.png" width="100" height="100" alt="">
                     </a>
                 </div>
                 <h3>Resistration</h3>
+                <div id="wrongInput">
+
+                </div>
                 <form action="#">
                     <div class="row">
                         <div class="col-xl-12 col-md-12">
-                            <input type="email" placeholder="Enter email">
+                            <input type="text" id="newUserName" placeholder="Enter username">
                         </div>
                         <div class="col-xl-12 col-md-12">
-                            <input type="password" placeholder="Password">
+                            <input type="password" id="newPass" placeholder="Password">
                         </div>
                         <div class="col-xl-12 col-md-12">
-                            <input type="Password" placeholder="Confirm password">
+                            <input type="Password" id="newRePass" placeholder="Confirm password">
                         </div>
                         <div class="col-xl-12">
-                            <button type="submit" class="boxed_btn_orange">Sign Up</button>
+                            <button href="#main_content" onclick="createNewAcc()" type="button" class="boxed_btn_orange">Sign Up</button>
                         </div>
                     </div>
                 </form>
@@ -1869,6 +2006,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 
     <!-- JS here -->
+    <script src="templates/huy/testScript.js"></script>
+    <script src="templates/vietQuizz/quizScript.js"></script>
     <script src="js/vendor/modernizr-3.5.0.min.js"></script>
     <script src="js/vendor/jquery-1.12.4.min.js"></script>
     <script src="js/popper.min.js"></script>

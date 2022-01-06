@@ -2,6 +2,7 @@ function allTest() {
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/api/tests",
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
         success: function (hi) {
             console.log(hi)
             displayTest(hi)
@@ -29,7 +30,7 @@ function displayTest(test) {
                         </tr>`
     }
     res += `</table>`
-    document.getElementById("display").innerHTML = res;
+    document.getElementById("listQuiz").innerHTML = res;
 }
 
 

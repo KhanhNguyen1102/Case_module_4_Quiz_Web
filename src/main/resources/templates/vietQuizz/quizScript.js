@@ -2,6 +2,7 @@ function getCategoryQuestion() {
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/api/categories",
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
         success: function (data) {
             console.log(data)
             let category = `<option>Chủ dề :</option>`
@@ -13,10 +14,11 @@ function getCategoryQuestion() {
     })
 }
 
-function getALLQuiz() {
+function getAllQuiz() {
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/api/quizzes",
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
         success: function (quiz) {
             console.log(quiz)
             getCategoryQuestion()
