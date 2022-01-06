@@ -1,8 +1,13 @@
 package com.example.case_module4_quizweb.controller;
 
+import com.example.case_module4_quizweb.model.Quiz;
 import com.example.case_module4_quizweb.model.Result;
 import com.example.case_module4_quizweb.service.result.IResultService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +61,12 @@ public class ResultController {
         }
         resultService.remove(id);
         return new ResponseEntity<>(resultOptional.get(), HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/searchId")
+    public ResponseEntity<Page<Result>> findAllByTestOrderByScore(@PageableDefault(size = 10) Pageable pageable, @RequestParam Long id) {
+        Page<Result> results = resultService.findAllByTestOrderByScore(pageable,id);
+        return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
 }
