@@ -8,4 +8,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface IQuizService extends IGeneralService<Quiz> {
     Page<Quiz> findAll(Pageable pageable);
+    Page<Quiz> findAllByName(Pageable pageable,String key);
 }

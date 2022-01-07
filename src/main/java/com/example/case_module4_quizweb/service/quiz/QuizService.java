@@ -38,4 +38,11 @@ public class QuizService implements IQuizService {
     public Page<Quiz> findAll(Pageable pageable) {
         return quizRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<Quiz> findAllByName(Pageable pageable, String key) {
+        return quizRepository.findAllByContentContaining(pageable,key);
+    }
+
+
 }

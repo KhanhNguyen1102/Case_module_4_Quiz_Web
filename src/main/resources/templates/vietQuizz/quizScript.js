@@ -14,21 +14,53 @@ function getCategoryQuestion() {
     })
 }
 
-function getAllQuiz() {
+function getAllQuiz(page) {
+    let search = "";
+    search += ` <div class="select-container">
+                                        <form class="d-flex">
+                                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="keyQuiz">
+                                            <button class="btn btn-outline-success" type="button" onclick="searchAllQuiz(0)">
+                                                Search
+                                            </button></br>
+                                        </form>
+                                    </div>`
+
+    let addButton = "<button type=\"button\" class=\"btn btn-success\" style=\"width: 100%\" onclick=\"formCreateQuiz()\">New Test</button>";
+    document.getElementById("inputSearch").innerHTML = search;
+    document.getElementById("addBtn").innerHTML = addButton;
+
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/quizzes",
+        url: "http://localhost:8080/api/quizzes/page?page=" + page,
         headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
         success: function (quiz) {
             console.log(quiz)
             getCategoryQuestion()
-            displayQuiz(quiz)
+            displayQuiz(quiz.content,page,quiz)
+
+        }
+    })
+
+}
+function searchAllQuiz(page){
+    let key = document.getElementById("keyQuiz").value;
+    if (key==null){
+        key = "";
+    }
+    console.log(key);
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/quizzes/page?page=" + page +"&key=" +key,
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
+        success: function (quiz) {
+            console.log(quiz)
+            getCategoryQuestion()
+            displayQuiz(quiz.content,page,quiz)
 
         }
     })
 }
-
-function displayQuiz(array) {
+function displayQuiz(array,page,quiz) {
     let res = "";
     res += `<hr>
         <select id="category"  ></select>
@@ -56,11 +88,34 @@ function displayQuiz(array) {
 // <!--    <td><button onclick="deleteQuiz(${array[i].id})">Delete</button></td>-->
 
     }
-    res += `</tbody></table>`
+    res += `</tbody></table>
+    <div style="margin-left: 40%" class="row text-center">
+      `
+    if (page>0){
+        res+=`<button type="button" class="btn btn-success" style="font-size: 1rem;color: black" onclick="getAllQuiz(${page-1})">Previous</button>&ensp;`
+    }
+    res+=`<span style="font-size: 1.5rem;color: black">${page+1} / ${quiz.totalPages}</span>&ensp;`
+    if (page+1<quiz.totalPages){
+        res+=`<button type="button" class="btn btn-success" style="font-size: 1rem;color: black" onclick="getAllQuiz(${page+1})">Next</button></div>`
+    }
+// if (page===0){
+//
+// }else {
+//     res+=`<p style="font-size: 1rem;color: black" onclick="getAllQuiz(${page-1})">Previous</p>&ensp;
+//         <span style="font-size: 1rem;color: black">${page+1}</span>&ensp;
+//         <p style="font-size: 1rem;color: black" onclick="getAllQuiz(${page+1})">Next</p></div>`
+// }
+// if (page===)
     console.log(res)
     document.getElementById("listQuiz").innerHTML = res;
 }
-
+// <center>
+//     <div>
+//         <a th:if="${products.hasPrevious()}" th:href="@{'/page'(page=${products.number -1},key=${key})}">Previous</a>
+//         <span th:text="${products.number +1}"></span>/<span th:text="${products.totalPages}"></span>
+//         <a th:if="${products.hasNext()}" th:href="@{'/page'(page=${products.number +1},key=${key})}">Next</a>
+//     </div>
+// </center>
 function deleteQuiz(id) {
     if (confirm("Are you sure")) {
         $.ajax({
@@ -155,8 +210,24 @@ function formCreateQuiz() {
                                 <td><input type="text" id="value"></td>
                             </tr>
                             <tr>
-                                <th>Status: </th>
-                                <td><input type="text" id="status"></td>
+                                
+                                <td><input type="hidden" id="status" value="1"></td>
+                            </tr>
+                            <tr>
+                                <th>Answer 1: </th>
+                                <td><input type="text" id="answer1"></td>
+                            </tr>
+                            <tr>
+                                <th>Answer 2: </th>
+                                <td><input type="text" id="answer2"></td>
+                            </tr>
+                            <tr>
+                                <th>Answer 3: </th>
+                                <td><input type="text" id="answer3"></td>
+                            </tr>
+                            <tr>
+                                <th>Answer 4: </th>
+                                <td><input type="text" id="answer4"></td>
                             </tr>
                             <tr>
                                 <th>Category: </th>
@@ -191,15 +262,15 @@ function saveQuiz() {
     $.ajax({
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "Authorization": 'Bearer ' + localStorage.getItem("token")
         },
         type: "POST",
         url: "http://localhost:8080/api/quizzes/create",
-        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
         data: JSON.stringify(quiz),
         success: function () {
             alert("Thêm Thành Công")
-            getALLQuiz();
+            getAllQuiz(0);
         },
         error: function (error) {
             console.log(error)

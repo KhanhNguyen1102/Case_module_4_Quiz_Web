@@ -31,12 +31,21 @@ public class QuizController {
         return new ResponseEntity<>(quizzes, HttpStatus.OK);
     }
     @GetMapping("/page")
-    public ResponseEntity<Page<Quiz>> findAllQuizz(@PageableDefault(size = 10) Pageable pageable) {
-        Page<Quiz> quizzes = quizService.findAll(pageable);
-        if (quizzes.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Page<Quiz>> findAllQuizz(@PageableDefault(size = 10) Pageable pageable,@RequestParam(defaultValue = "") String key) {
+        if (key.equals("")){
+            Page<Quiz> quizzes = quizService.findAll(pageable);
+            if (quizzes.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(quizzes, HttpStatus.OK);
+        }else {
+            Page<Quiz> quizzes =  quizService.findAllByName(pageable,key);
+            if (quizzes.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(quizzes, HttpStatus.OK);
         }
-        return new ResponseEntity<>(quizzes, HttpStatus.OK);
+
     }
     @PostMapping("")
     public ResponseEntity<Quiz> findQuizById(@RequestParam Long id) {
