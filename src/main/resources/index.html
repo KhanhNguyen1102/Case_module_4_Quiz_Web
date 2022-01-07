@@ -29,7 +29,6 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
 
-
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 
@@ -1757,7 +1756,7 @@
                                     </div>
                                 </div>
                             </a>
-                            <a href="#" class="w-50 pl-3"  style="padding: 10px 10px 10px 10px">
+                            <a href="#" class="w-50 pl-3"  style="padding: 10px 10px 10px 10px" title="Shortcut Category Management">
                                 <div class="card border-0 border-bottom-green shadow-lg shadow-hover" style="border-radius: 50%">
                                     <div >
                                         <i class="fa fa-2x fa-list my-1" style="color: #ed6dfd"></i>
@@ -1784,18 +1783,18 @@
                                     <h5 class="card-title mb-0"><img src="https://img.icons8.com/ios/2x/double-tap-gesture.gif" height="30" width="30"> Click on the lines to see detailed information</h5>
                                     <div id="result" style="padding: 10px 10px 10px 10px "></div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="select-container">
-                                        <form class="d-flex">
-                                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="key">
-                                            <a class="btn btn-outline-success" type="submit" onclick="searchQuiz()">
-                                                Search
-                                            </a></br>
-                                        </form>
-                                    </div>
+                                <div id="inputSearch" class="col-md-4">
+<!--                                    <div class="select-container">-->
+<!--                                        <form class="d-flex">-->
+<!--                                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="key">-->
+<!--                                            <a class="btn btn-outline-success" type="submit" onclick="searchQuiz()">-->
+<!--                                                Search-->
+<!--                                            </a></br>-->
+<!--                                        </form>-->
+<!--                                    </div>-->
                                 </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-success" style="width: 100%" onclick="showFormCreateQuiz()">New Quiz</button>
+                                <div id="addBtn" class="col-md-2">
+<!--                                    <button type="submit" class="btn btn-success" style="width: 100%" onclick="showFormCreateQuiz()">New Quiz</button>-->
                                 </div>
                             </div>
                         </div>
@@ -1812,15 +1811,43 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3" >
+                <div id="leaderBoard" class="col-xl-3" >
+                    <div style="border: 1px solid #d9d9d9" class="card-header ">
+                        <center>
+                            <p style="font-size: 2rem;color: #f55555">Leaderboard</p>
+                        </center>
+                    </div>
                     <div class="card"  style=" height: 750px;padding: 15px 15px 15px 15px">
-                        <div class="card" id="rightTop" style="padding: 15px 15px 15px 15px;border: #efeff6 solid;border-radius: 10px"></div>
-                        <div class="card" style="padding: 15px 15px 15px 15px">
-                            <div class="row" id="rightMid">
+<!--                        <div class="card" id="rightTop" style="padding: 15px 15px 15px 15px;border: #efeff6 solid;border-radius: 10px">-->
+<!--                            -->
+<!--                        </div>-->
+<!--                        <div class="card" id="rightMid" style="padding: 15px 15px 15px 15px">-->
+<!--                            <div class="row" >-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="card" id="rightBot" style="padding: 15px 15px 15px 15px ">-->
+<!--                            <div class="row" >-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><i style="color: yellow;font-size: 2rem" class="fas fa-medal"></i></h5>
+                                <h6 style="font-size: 20px" class="card-subtitle mb-2 text-muted">20000 points</h6>
+                                <p style="color: #0ea20e;font-size: 40px" class="card-text">Hoang Viet</p>
                             </div>
                         </div>
-                        <div class="card" style="padding: 15px 15px 15px 15px ">
-                            <div class="row" id="rightBot">
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><i style="color: #d3d3d3;font-size: 2rem" class="fas fa-medal"></i></h5>
+                                <h6 style="font-size: 20px" class="card-subtitle mb-2 text-muted">10000 points</h6>
+                                <p style="color: #0ea20e;font-size: 40px" class="card-text">Quang Huy</p>
+                            </div>
+                        </div>
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><i style="color: #ce3030;font-size: 2rem" class="fas fa-medal"></i></h5>
+                                <h6 style="font-size: 20px" class="card-subtitle mb-2 text-muted">5000 points</h6>
+                                <p style="color: #0ea20e;font-size: 40px" class="card-text">Khanh trang</p>
                             </div>
                         </div>
                     </div>

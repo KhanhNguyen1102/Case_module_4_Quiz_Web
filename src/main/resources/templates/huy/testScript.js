@@ -2,7 +2,7 @@ function allTest() {
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/api/tests",
-        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
+        headers: {"Authorization": 'Bearer ' + localStorage.getItem("token")},
         success: function (hi) {
             console.log(hi)
             displayTest(hi)
@@ -31,16 +31,32 @@ function displayTest(test) {
     }
     res += `</table>`
     document.getElementById("listQuiz").innerHTML = res;
+    let search = "";
+    search += ` <div class="select-container">
+                                        <form class="d-flex">
+                                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="key">
+                                            <a class="btn btn-outline-success" type="submit" onclick="searchTest()">
+                                                Search
+                                            </a></br>
+                                        </form>
+                                    </div>`
+
+    let addButton = "<button type=\"submit\" class=\"btn btn-success\" style=\"width: 100%\" onclick=\"formCreateTest()\">New Test</button>";
+    document.getElementById("inputSearch").innerHTML = search;
+    document.getElementById("addBtn").innerHTML = addButton;
+}
+function searchTest(){
+
 }
 
-
 function formCreateTest() {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/api/users",
-            success: function (user) {
-                console.log(user);
-                let form = `<table cellpadding="5">
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/users",
+        headers: {"Authorization": 'Bearer ' + localStorage.getItem("token")},
+        success: function (user) {
+            console.log(user);
+            let form = `<table cellpadding="5">
                       
                             <tr>
                                 <th>name: </th>
@@ -54,10 +70,10 @@ function formCreateTest() {
                                 <th>username: </th>
                                 <td>
                                     <select id="user">`
-                for (let i = 0; i < user.length; i++) {
-                    form += `<option value="${user[i].id}">${user[i].username}</option>`
-                }
-                form += `</select>
+            for (let i = 0; i < user.length; i++) {
+                form += `<option value="${user[i].id}">${user[i].username}</option>`
+            }
+            form += `</select>
                                 </td>
                             </tr>
                             <tr>
@@ -65,7 +81,7 @@ function formCreateTest() {
                                 <td><button onclick="saveTest()">Save</button></td>
                             </tr>
                         </table>`;
-            document.getElementById("display").innerHTML = form;
+            document.getElementById("listQuiz").innerHTML = form;
         }
     })
 }
@@ -147,14 +163,14 @@ function showFormEditTest(id) {
         url: "http://localhost:8080/api/tests?id=" + id,
         success: function (test) {
             console.log(test)
-                    let form =
-                        "<p>Name</p>" + `<input type="text" id="name" value="${test.name}">\n` + "<br>" +
-                        "<p>status</p>" + `<input type="text" id="status" value="${test.status}">\n` + "<br>" +
-                        "<p>User</p>" + `<input type="text" id="user" value="${test.user.id}">\n` + "<br>" +
-                         `<button onclick="updateTest(${test.id})">Thay đổi</button>` + '<br>'
-                    console.log(form)
-                    document.getElementById("display").innerHTML = form;
-                }
+            let form =
+                "<p>Name</p>" + `<input type="text" id="name" value="${test.name}">\n` + "<br>" +
+                "<p>status</p>" + `<input type="text" id="status" value="${test.status}">\n` + "<br>" +
+                "<p>User</p>" + `<input type="text" id="user" value="${test.user.id}">\n` + "<br>" +
+                `<button onclick="updateTest(${test.id})">Thay đổi</button>` + '<br>'
+            console.log(form)
+            document.getElementById("display").innerHTML = form;
+        }
     })
 }
 

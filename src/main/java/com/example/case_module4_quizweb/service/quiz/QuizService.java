@@ -1,8 +1,11 @@
 package com.example.case_module4_quizweb.service.quiz;
 
 import com.example.case_module4_quizweb.model.Quiz;
+import com.example.case_module4_quizweb.model.Result;
 import com.example.case_module4_quizweb.repository.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,5 +33,9 @@ public class QuizService implements IQuizService {
     @Override
     public void remove(Long id) {
             quizRepository.deleteById(id);
+    }
+    @Override
+    public Page<Quiz> findAll(Pageable pageable) {
+        return quizRepository.findAll(pageable);
     }
 }

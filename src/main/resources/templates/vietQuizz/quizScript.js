@@ -5,7 +5,7 @@ function getCategoryQuestion() {
         headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
         success: function (data) {
             console.log(data)
-            let category = `<option>Chủ dề :</option>`
+            let category = `<option>Category :</option>`
             for (let i = 0; i < data.length; i++) {
                 category += `<option value="${data[i].id}">${data[i].name}</option>`
                 document.getElementById('category').innerHTML = category;
@@ -34,26 +34,29 @@ function displayQuiz(array) {
         <select id="category"  ></select>
         
             <hr>`
-    res += `<table border="1" cellpadding="5">
+    res += `<table class="table table-hover" style="width: 100%" border="1" cellpadding="5">
+<thead>
     <tr>
-        <th>Content</th>
-        <th>Category</th>
-        <th>Value</th>
-        <th>status</th>
-        <th colspan="3">Action</th>
-    </tr>`
+        <th scope="col">#</th>
+        <th scope="col">Content</th>
+        <th scope="col">Category</th>
+        <th scope="col">Value</th>
+    </tr>
+    </thead><tbody>`
     for (let i = 0; i < array.length; i++) {
-        res += `<tr>
-    <td> ${array[i].content}</td>
-    <td> ${array[i].category.name}</td>
-    <td> ${array[i].value}</td>
-    <td> ${array[i].status}</td>
-    <td><button onclick="viewQuiz(${array[i].id})">View</button></td>
-    <td><button onclick="showFormEditQuiz(${array[i].id})">Edit</button></td>
-    <td><button onclick="deleteQuiz(${array[i].id})">Delete</button></td>
-</tr>`
+        res += `
+<tr>
+        <th scope="row">${i+1}</th>
+        <td>${array[i].content}</td>
+        <td>${array[i].category.name}</td>
+        <td>${array[i].value}</td>
+    </tr>`
+// <!--    <td><button onclick="viewQuiz(${array[i].id})">View</button></td>-->
+// <!--    <td><button onclick="showFormEditQuiz(${array[i].id})">Edit</button></td>-->
+// <!--    <td><button onclick="deleteQuiz(${array[i].id})">Delete</button></td>-->
+
     }
-    res += `</table>`
+    res += `</tbody></table>`
     console.log(res)
     document.getElementById("listQuiz").innerHTML = res;
 }

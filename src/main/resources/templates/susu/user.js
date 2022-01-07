@@ -66,9 +66,53 @@ function checkLogin(){
             "                                        <i class=\"fas fa-sign-out-alt\"></i>\n" +
             "                                        <span>Logout</span>\n" +
             "                                    </a>"
+        loadLeaderBoard();
     }
-}
 
+}
+function loadLeaderBoard(){
+    $.ajax({
+        type: "GET",
+        url: " http://localhost:8080/api/results/top3",
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
+        success: function (data) {
+            console.log(data)
+            displayLeaderBoard(data);
+        }
+    })
+}
+function displayLeaderBoard(data){
+    let res = "";
+    res += `<div style="border: 1px solid #d9d9d9" class="card-header ">
+                        <center>
+                            <p style="font-size: 2rem;color: #f55555">Leaderboard</p>
+                        </center>
+                    </div>
+                    <div class="card"  style=" height: 750px;padding: 15px 15px 15px 15px">
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><i style="color: yellow;font-size: 2rem" class="fas fa-medal"></i></h5>
+                                <h6 style="font-size: 20px" class="card-subtitle mb-2 text-muted">${data[0].score} points</h6>
+                                <p style="color: #0ea20e;font-size: 40px" class="card-text">${data[0].user.username}</p>
+                            </div>
+                        </div>
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><i style="color: #d3d3d3;font-size: 2rem" class="fas fa-medal"></i></h5>
+                                <h6 style="font-size: 20px" class="card-subtitle mb-2 text-muted">${data[1].score} points</h6>
+                                <p style="color: #0ea20e;font-size: 40px" class="card-text">${data[1].user.username}</p>
+                            </div>
+                        </div>
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><i style="color: #ce3030;font-size: 2rem" class="fas fa-medal"></i></h5>
+                                <h6 style="font-size: 20px" class="card-subtitle mb-2 text-muted">${data[2].score} points</h6>
+                                <p style="color: #0ea20e;font-size: 40px" class="card-text">${data[2].user.username}</p>
+                            </div>
+                        </div>
+                    </div>`
+    document.getElementById("leaderBoard").innerHTML = res;
+}
 function logout(){
     localStorage.clear();
     location.reload();
