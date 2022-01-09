@@ -1,83 +1,166 @@
-function allTest() {
-    $.ajax({
-        type: "GET",
-        url: "http://localhost:8080/api/tests",
-        headers: {"Authorization": 'Bearer ' + localStorage.getItem("token")},
-        success: function (hi) {
-            console.log(hi)
-            displayTest(hi)
-        }
-    })
-}
-
-function displayTest(test) {
-    let res = "";
-    res += `<table border="1" cellpadding="5">
-                <tr>
-                    <th>name</th>
-                    <th>status</th>
-                    <th>username</th>
-                    <th colspan="3">Action</th>
-                </tr>`
-    for (let i = 0; i < test.length; i++) {
-        res += `<tr>
-                    <td> ${test[i].name}</td>
-                    <td> ${test[i].status}</td>
-                    <td> ${test[i].user.username}</td>
-                    <td><button onclick="viewTest(${test[i].id})">View</button></td>
-                    <td><button onclick="showFormEditTest(${test[i].id})">Edit</button></td>
-                    <td><button onclick="deleteTest(${test[i].id})">Delete</button></td>
-                        </tr>`
-    }
-    res += `</table>`
-    document.getElementById("listQuiz").innerHTML = res;
+function allTest(page) {
     let search = "";
     search += ` <div class="select-container">
                                         <form class="d-flex">
-                                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="key">
-                                            <a class="btn btn-outline-success" type="submit" onclick="searchTest()">
+                                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="keyTest">
+                                            <button class="btn btn-outline-success" type="button" onclick="searchAllTest(0)">
                                                 Search
-                                            </a></br>
+                                            </button></br>
                                         </form>
                                     </div>`
 
-    let addButton = "<button type=\"submit\" class=\"btn btn-success\" style=\"width: 100%\" onclick=\"formCreateTest()\">New Test</button>";
+    let addButton = "<button type=\"button\" class=\"btn btn-success\" style=\"width: 100%\" onclick=\"formCreateTest()\">New Test</button>";
     document.getElementById("inputSearch").innerHTML = search;
     document.getElementById("addBtn").innerHTML = addButton;
-}
-function searchTest(){
 
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/tests/page?page=" + page,
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
+        success: function (test) {
+            console.log(test)
+            // getCategoryQuestion()
+            displayTest1(test.content,page,test)
+
+        }
+    })
 }
+function displayTest1(array,page,test){
+    let res = "";
+
+    res += `<table class="table table-hover" style="width: 100%" border="1" cellpadding="5">
+<thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Author</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead><tbody>`
+    for (let i = 0; i < array.length; i++) {
+        res += `
+<tr>
+        <th scope="row">${i+1}</th>
+        <td>${array[i].name}</td>
+        <td>${array[i].user.username}</td>
+        <td><button onclick="viewTest(${array[i].id})">View</button><button><a href="play.html">Play</a></button></td>
+    </tr>`
+    }
+    res += `</tbody></table>
+    <div style="margin-left: 40%" class="row text-center">
+      `
+    if (page>0){
+        res+=`<button type="button" class="btn btn-success" style="font-size: 1rem;color: black" onclick="allTest(${page-1})">Previous</button>&ensp;`
+    }
+    res+=`<span style="font-size: 1.5rem;color: black">${page+1} / ${test.totalPages}</span>&ensp;`
+    if (page+1<test.totalPages){
+        res+=`<button type="button" class="btn btn-success" style="font-size: 1rem;color: black" onclick="allTest(${page+1})">Next</button></div>`
+    }
+    console.log(res)
+    document.getElementById("listQuiz").innerHTML = res;
+}
+
+
 
 function formCreateTest() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/users",
+        url: "http://localhost:8080/api/quizzes",
         headers: {"Authorization": 'Bearer ' + localStorage.getItem("token")},
-        success: function (user) {
-            console.log(user);
-            let form = `<table cellpadding="5">
-                      
+        success: function (data) {
+            console.log(data);
+            let form = `<table cellpadding="5">                 
                             <tr>
                                 <th>name: </th>
                                 <td><input type="text" id="name"></td>
                             </tr>
                             <tr>
-                                <th>Status: </th>
-                                <td><input type="text" id="status"></td>
+                                <td><input type="hidden" id="status" value="1"></td>
                             </tr>
                             <tr>
-                                <th>username: </th>
-                                <td>
-                                    <select id="user">`
-            for (let i = 0; i < user.length; i++) {
-                form += `<option value="${user[i].id}">${user[i].username}</option>`
+                                 <td><input type="hidden" id="user" value="${localStorage.getItem("userId")}"></td>
+                            </tr>
+                            <tr>
+                                <td>Question 1:</td>
+                                 <td><select id="quest1">`
+            for (let i = 0; i < data.length; i++) {
+                form += `<option value="${data[i].id}">${data[i].content}</option>`
             }
-            form += `</select>
-                                </td>
+            form +=`</select></td>
                             </tr>
-                            <tr>
-                                <th></th>
+                             <tr>
+                                <td>Question 2:</td>
+                                 <td><select id="quest2">`
+            for (let i = 0; i < data.length; i++) {
+                form += `<option value="${data[i].id}">${data[i].content}</option>`
+            }
+            form +=`</select></td>
+                            </tr>
+                             <tr>
+                                <td>Question 3:</td>
+                                 <td><select id="quest3">`
+            for (let i = 0; i < data.length; i++) {
+                form += `<option value="${data[i].id}">${data[i].content}</option>`
+            }
+            form +=`</select></td>
+                            </tr>
+                             <tr>
+                                <td>Question 4:</td>
+                                 <td><select id="quest4">`
+            for (let i = 0; i < data.length; i++) {
+                form += `<option value="${data[i].id}">${data[i].content}</option>`
+            }
+            form +=`</select></td>
+                            </tr>
+                             <tr>
+                                <td>Question 5:</td>
+                                 <td><select id="quest5">`
+            for (let i = 0; i < data.length; i++) {
+                form += `<option value="${data[i].id}">${data[i].content}</option>`
+            }
+            form +=`</select></td>
+                            </tr>
+                             <tr>
+                                <td>Question 6:</td>
+                                 <td><select id="quest6">`
+            for (let i = 0; i < data.length; i++) {
+                form += `<option value="${data[i].id}">${data[i].content}</option>`
+            }
+            form +=`</select></td>
+                            </tr>
+                             <tr>
+                                <td>Question 7:</td>
+                                 <td><select id="quest7">`
+            for (let i = 0; i < data.length; i++) {
+                form += `<option value="${data[i].id}">${data[i].content}</option>`
+            }
+            form +=`</select></td>
+                            </tr>
+                             <tr>
+                                <td>Question 8:</td>
+                                 <td><select id="quest8">`
+            for (let i = 0; i < data.length; i++) {
+                form += `<option value="${data[i].id}">${data[i].content}</option>`
+            }
+            form +=`</select></td>
+                            </tr>
+                             <tr>
+                                <td>Question 9:</td>
+                                 <td><select id="quest9">`
+            for (let i = 0; i < data.length; i++) {
+                form += `<option value="${data[i].id}">${data[i].content}</option>`
+            }
+            form +=`</select></td>
+                            </tr>
+                             <tr>
+                                <td>Question 10:</td>
+                                 <td><select id="quest10">`
+            for (let i = 0; i < data.length; i++) {
+                form += `<option value="${data[i].id}">${data[i].content}</option>`
+            }
+            form +=`</select></td>
+                            </tr>
+                            <tr>                               
                                 <td><button onclick="saveTest()">Save</button></td>
                             </tr>
                         </table>`;
@@ -91,22 +174,53 @@ function saveTest() {
         "name": document.getElementById("name").value,
         "status": document.getElementById("status").value,
         "user": {
-            "id": document.getElementById("user").value,
+            "id": document.getElementById("user").value
         },
-
+        "quizzes":[{
+            "id":document.getElementById("quest1").value
+        },
+            {
+                "id":document.getElementById("quest2").value
+            },
+            {
+                "id":document.getElementById("quest3").value
+            },
+            {
+                "id":document.getElementById("quest4").value
+            },
+            {
+                "id":document.getElementById("quest5").value
+            },
+            {
+                "id":document.getElementById("quest6").value
+            },
+            {
+                "id":document.getElementById("quest7").value
+            },
+            {
+                "id":document.getElementById("quest8").value
+            },
+            {
+                "id":document.getElementById("quest9").value
+            },
+            {
+                "id":document.getElementById("quest10").value
+            }]
     }
     console.log(test)
     $.ajax({
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "Authorization": 'Bearer ' + localStorage.getItem("token")
         },
         type: "POST",
         url: "http://localhost:8080/api/tests/create",
+
         data: JSON.stringify(test),
-        success: function (test) {
+        success: function () {
             alert("Thêm Thành Công")
-            allTest(test);
+            allTest(0);
         },
         error: function (error) {
             console.log(error)

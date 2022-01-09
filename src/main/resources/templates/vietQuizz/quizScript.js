@@ -25,7 +25,7 @@ function getAllQuiz(page) {
                                         </form>
                                     </div>`
 
-    let addButton = "<button type=\"button\" class=\"btn btn-success\" style=\"width: 100%\" onclick=\"formCreateQuiz()\">New Test</button>";
+    let addButton = "<button type=\"button\" class=\"btn btn-success\" style=\"width: 100%\" onclick=\"formCreateQuiz()\">New Quiz</button>";
     document.getElementById("inputSearch").innerHTML = search;
     document.getElementById("addBtn").innerHTML = addButton;
 
@@ -63,7 +63,7 @@ function searchAllQuiz(page){
 function displayQuiz(array,page,quiz) {
     let res = "";
     res += `<hr>
-        <select id="category"  ></select>
+        <span id="category1"><select id="category"  ></select></span>
         
             <hr>`
     res += `<table class="table table-hover" style="width: 100%" border="1" cellpadding="5">
@@ -83,9 +83,6 @@ function displayQuiz(array,page,quiz) {
         <td>${array[i].category.name}</td>
         <td>${array[i].value}</td>
     </tr>`
-// <!--    <td><button onclick="viewQuiz(${array[i].id})">View</button></td>-->
-// <!--    <td><button onclick="showFormEditQuiz(${array[i].id})">Edit</button></td>-->
-// <!--    <td><button onclick="deleteQuiz(${array[i].id})">Delete</button></td>-->
 
     }
     res += `</tbody></table>
@@ -98,24 +95,11 @@ function displayQuiz(array,page,quiz) {
     if (page+1<quiz.totalPages){
         res+=`<button type="button" class="btn btn-success" style="font-size: 1rem;color: black" onclick="getAllQuiz(${page+1})">Next</button></div>`
     }
-// if (page===0){
-//
-// }else {
-//     res+=`<p style="font-size: 1rem;color: black" onclick="getAllQuiz(${page-1})">Previous</p>&ensp;
-//         <span style="font-size: 1rem;color: black">${page+1}</span>&ensp;
-//         <p style="font-size: 1rem;color: black" onclick="getAllQuiz(${page+1})">Next</p></div>`
-// }
-// if (page===)
+
     console.log(res)
     document.getElementById("listQuiz").innerHTML = res;
 }
-// <center>
-//     <div>
-//         <a th:if="${products.hasPrevious()}" th:href="@{'/page'(page=${products.number -1},key=${key})}">Previous</a>
-//         <span th:text="${products.number +1}"></span>/<span th:text="${products.totalPages}"></span>
-//         <a th:if="${products.hasNext()}" th:href="@{'/page'(page=${products.number +1},key=${key})}">Next</a>
-//     </div>
-// </center>
+
 function deleteQuiz(id) {
     if (confirm("Are you sure")) {
         $.ajax({
@@ -230,6 +214,13 @@ function formCreateQuiz() {
                                 <td><input type="text" id="answer4"></td>
                             </tr>
                             <tr>
+                                <th>The correct answer: </th>
+                                <td><input type="radio" name="correct" value="1">Answer1</td>
+                                <td width="163px"><input type="radio" name="correct" value="2">Answer2</td>
+                                <td width="163px"><input type="radio" name="correct" value="3">Answer3</td>
+                                <td width="163px"> <input type="radio" name="correct" value="4">Answer4</td>
+                            </tr>
+                            <tr>
                                 <th>Category: </th>
                                 <td>
                                     <select id="category">`
@@ -270,14 +261,102 @@ function saveQuiz() {
         data: JSON.stringify(quiz),
         success: function () {
             alert("Thêm Thành Công")
-            getAllQuiz(0);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+setTimeout(createAnswer(),1000);
+
+    getAllQuiz(0);
+}
+function createAnswer(){
+
+    var checkbox = document.getElementsByName("correct");
+    var correct1,correct2,correct3,correct4 = 2;
+
+    for (var i = 0; i < checkbox.length; i++){
+        if (checkbox[0].checked === true){
+            correct1=1;
+        }
+        if (checkbox[1].checked === true){
+            correct2=1;
+        }
+        if (checkbox[2].checked === true){
+            correct3=1;
+        }
+        if (checkbox[3].checked === true){
+            correct4=1;
+        }
+    }
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/quizzes/newest",
+        headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
+        success: function (data) {
+            console.log(data)
+            localStorage.setItem("quizId",data.id);
+            let quizId= localStorage.getItem("quizId");
+            console.log(quizId);
+            let newAnswer1 = {
+                "content": document.getElementById("answer1").value,
+                "quiz": {
+                    "id": quizId
+                },
+
+                "correct": correct1
+            };
+            let newAnswer2 = {
+                "content": document.getElementById("answer2").value,
+                "quiz": {
+                    "id": quizId
+                },
+
+                "correct": correct2
+            };
+            let newAnswer3 = {
+                "content": document.getElementById("answer3").value,
+                "quiz": {
+                    "id": quizId
+                },
+
+                "correct": correct3
+            };
+            let newAnswer4 = {
+                "content": document.getElementById("answer4").value,
+                "quiz": {
+                    "id": quizId
+                },
+
+                "correct": correct4
+            };
+            saveNewAnswer(newAnswer1);
+            saveNewAnswer(newAnswer2);
+            saveNewAnswer(newAnswer3);
+            saveNewAnswer(newAnswer4);
+            localStorage.removeItem("quizId");
+        }
+    })
+
+}
+function saveNewAnswer(answer){
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": 'Bearer ' + localStorage.getItem("token")
+        },
+        type: "POST",
+        url: "http://localhost:8080/api/answers/create",
+        data: JSON.stringify(answer),
+        success: function () {
+            alert("add answer ok")
         },
         error: function (error) {
             console.log(error)
         }
     })
 }
-
 function viewQuiz(id) {
     $.ajax({
         type: "POST",

@@ -14,6 +14,7 @@ function signIn() {
         success: function (data) {
             localStorage.setItem("username", user.username)
             localStorage.setItem("token", data.accessToken)
+            localStorage.setItem("userId",data.id)
             console.log(data)
             location.reload();
             document.getElementById('role').innerHTML = "<i class=\"flaticon-user\"></i>\n" +

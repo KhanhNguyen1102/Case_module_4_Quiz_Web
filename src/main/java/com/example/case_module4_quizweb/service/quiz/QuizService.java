@@ -44,5 +44,10 @@ public class QuizService implements IQuizService {
         return quizRepository.findAllByContentContaining(pageable,key);
     }
 
+    @Override
+    public Optional<Quiz> findNewestQuiz() {
+        return quizRepository.findNewestQuiz();
+    }
+
 
 }

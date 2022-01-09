@@ -3,6 +3,7 @@ package com.example.case_module4_quizweb.controller;
 
 import com.example.case_module4_quizweb.model.Quiz;
 import com.example.case_module4_quizweb.model.Result;
+import com.example.case_module4_quizweb.model.User;
 import com.example.case_module4_quizweb.service.quiz.IQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,11 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(quizzes, HttpStatus.OK);
+    }
+    @GetMapping("/newest")
+    public ResponseEntity<Quiz> findNewestQuiz(){
+        Optional<Quiz> quiz = quizService.findNewestQuiz();
+        return new ResponseEntity<>(quiz.get(), HttpStatus.OK);
     }
     @GetMapping("/page")
     public ResponseEntity<Page<Quiz>> findAllQuizz(@PageableDefault(size = 10) Pageable pageable,@RequestParam(defaultValue = "") String key) {
