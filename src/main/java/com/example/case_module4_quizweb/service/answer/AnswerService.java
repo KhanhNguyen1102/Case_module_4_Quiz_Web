@@ -26,6 +26,11 @@ public class AnswerService implements IAnswerService {
     }
 
     @Override
+    public Iterable<Answer> findAllByQuiz(long id) {
+        return answerRepository.findAllByQuiz(id);
+    }
+
+    @Override
     public Optional<Answer> findById(Long id) {
         return answerRepository.findById(id);
     }

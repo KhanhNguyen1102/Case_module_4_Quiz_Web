@@ -37,8 +37,8 @@ public class TestController {
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
 
-    @PostMapping("")
-    public ResponseEntity<Test> findQuizById(@RequestParam Long id) {
+    @GetMapping("/search")
+    public ResponseEntity<Test> findTestById(@RequestParam Long id) {
         Optional<Test> testOptional = testService.findById(id);
         if (!testOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

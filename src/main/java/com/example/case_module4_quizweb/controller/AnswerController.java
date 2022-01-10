@@ -28,6 +28,14 @@ public class AnswerController {
         }
         return new ResponseEntity<>(answers, HttpStatus.OK);
     }
+    @GetMapping("/quiz")
+    public ResponseEntity<Iterable<Answer>> findAllAnswerByQuiz(@RequestParam long id) {
+        List<Answer> answers = (List<Answer>) answerService.findAllByQuiz(id);
+        if (answers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(answers, HttpStatus.OK);
+    }
     @GetMapping("/page")
     public ResponseEntity<Page<Answer>> findAllAnswer(@PageableDefault(size = 10) Pageable pageable) {
         Page<Answer> answers = answerService.findAll(pageable);

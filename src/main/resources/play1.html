@@ -27,21 +27,24 @@
     <link rel="stylesheet" href="css/slicknav.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="templates/susu/user.js"></script>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
     <style>
-        body{
+        body {
             background-image: url("../../img/background.jpg");
         }
-        #content{
-            background-image: linear-gradient(#c6ffdd, #fbd786,#f7797d );
+
+        #content {
+            background-image: linear-gradient(#c6ffdd, #fbd786, #f7797d);
             /*background-color: black;*/
             width: 650px;
             height: 500px;
             margin-top: 5%;
             border-radius: 10%;
         }
-        .button1{
+
+        .button1 {
             top: 50px;
             left: 20px;
             width: 92%;
@@ -56,7 +59,8 @@
             border-radius: 20px;
             font-size: 2rem;
         }
-        #button2,#button3,#button4,#button5,#previous,#next{
+
+        #button2, #button3, #button4, #button5, #previous, #next {
             width: 270px;
             border: none;
             outline: none;
@@ -69,25 +73,32 @@
             font-size: 1.5rem;
             transition: 0.5s;
         }
-        #button2:hover,#button3:hover{
-            transform: scale(1.2)!important;
+
+        #button2:hover, #button3:hover {
+            transform: scale(1.2) !important;
         }
-        #button4:hover,#button5:hover,#previous:hover,#next:hover{
+
+        #button4:hover, #button5:hover, #previous:hover, #next:hover {
             transform: scale(1.2);
         }
-        #button2,#button3{
+
+        #button2, #button3 {
             top: 80px;
         }
-        #button2,#button4{
+
+        #button2, #button4 {
             left: 20px;
         }
-        #button3,#button5{
+
+        #button3, #button5 {
             left: 40px;
         }
-        #button4,#button5{
+
+        #button4, #button5 {
             top: 120px;
         }
-        #pageNum{
+
+        #pageNum {
             position: relative;
             top: 50px;
             left: 170px;
@@ -95,7 +106,8 @@
             z-index: 1;
             font-size: 1.5rem;
         }
-        #time{
+
+        #time {
             position: relative;
             top: 50px;
             left: 40px;
@@ -103,14 +115,16 @@
             z-index: 1;
             font-size: 1.5rem;
         }
-        #previous{
+
+        #previous {
             position: relative;
             top: 150px;
             left: 30px;
             width: 120px;
             background: #f84141;
         }
-        #next{
+
+        #next {
             position: relative;
             top: 150px;
             left: 350px;
@@ -118,42 +132,16 @@
             background: #f84141;
         }
     </style>
+    <script src="templates/susu/play.js"></script>
 </head>
-<body>
+<body onload="playTest()">
 <div class="row">
     <div class="col-12">
-        <button type="button" class="btn btn-danger"><a href="index.html">Quit</a></button>
+        <button type="button" class="btn btn-danger"><a href="index.html#listQuiz">Quit</a></button>
     </div>
 </div>
 <div class="container-fluid" id="content">
-<div class="row">
-    <div class="col-12">
-        <div class="row">
-            <h5 id="time">Total time :3 minutes</h5>
-            <h5 id="pageNum">Question 1/10</h5>
-        </div>
-    </div>
-    <div class="col-12">
-        <button class="button1">
-            Trông như quả bóng tròn xanh.Đung đưa trên cành chờ Tết trung thu.Là quả gì?
-    </button>
-    </div>
-    <div class="col-12">
-        <button id="button2">Dap an 1</button>
-        <button id="button3">Dap an 2</button>
-    </div>
-    <div class="col-12">
-        <button id="button4">Dap an 3</button>
-        <button id="button5">Dap an 4</button>
-    </div>
-    <div class="col-12">
-        <div class="row">
-            <button id="previous">Previous</button>
-            <button id="next">Next</button>
-        </div>
-    </div>
 
-</div>
 </div>
 </body>
 </html>

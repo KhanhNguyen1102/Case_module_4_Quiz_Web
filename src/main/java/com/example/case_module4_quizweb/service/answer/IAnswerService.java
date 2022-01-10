@@ -7,4 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface IAnswerService extends IGeneralService<Answer> {
     Page<Answer> findAll(Pageable pageable);
+    Iterable<Answer> findAllByQuiz(long id);
 }

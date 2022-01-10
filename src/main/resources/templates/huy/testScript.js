@@ -43,7 +43,7 @@ function displayTest1(array,page,test){
         <th scope="row">${i+1}</th>
         <td>${array[i].name}</td>
         <td>${array[i].user.username}</td>
-        <td><button onclick="viewTest(${array[i].id})">View</button><button><a href="play.html">Play</a></button></td>
+        <td><button onclick="viewTest(${array[i].id})">View</button><button><a onclick="loadTest(${array[i].id})" >Play</a></button></td>
     </tr>`
     }
     res += `</tbody></table>
@@ -59,7 +59,10 @@ function displayTest1(array,page,test){
     console.log(res)
     document.getElementById("listQuiz").innerHTML = res;
 }
-
+function loadTest(id){
+    localStorage.setItem("testInPlay",id);
+    window.location="play.html";
+}
 
 
 function formCreateTest() {
