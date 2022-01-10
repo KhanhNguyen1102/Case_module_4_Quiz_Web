@@ -1,4 +1,5 @@
 function playTest() {
+
     let id = localStorage.getItem("testInPlay")
     $.ajax({
         type: "GET",
@@ -78,7 +79,9 @@ function playTest() {
             localStorage.setItem("choice104","1");
             let i = 2;
             playingTest(test.quizzes[0].content, test.quizzes[0].id, i);
-
+            let second = 0 ;
+            localStorage.setItem("time",second);
+            setInterval(increaseTime,1000);
         }
     })
 
@@ -118,7 +121,7 @@ function playingTest(test, quizId, i) {
                 let form = `<div class="row">
         <div class="col-12">
             <div class="row">
-                <h5 id="time">Total time :3 minutes</h5>
+                <h5 id="time">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</h5>
                 <h5 id="pageNum">Question ${i-1}/10</h5>
             </div>
         </div>
@@ -182,7 +185,7 @@ function playingTest(test, quizId, i) {
                 let form = `<div class="row">
         <div class="col-12">
             <div class="row">
-                <h5 id="time">Total time :3 minutes</h5>
+                <h5 id="time">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</h5>
                 <h5 id="pageNum">Question ${i-1}/10</h5>
             </div>
         </div>
@@ -244,7 +247,7 @@ function playingTest(test, quizId, i) {
                 let form = `<div class="row">
         <div class="col-12">
             <div class="row">
-                <h5 id="time">Total time :3 minutes</h5>
+                <h5 id="time">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</h5>
                 <h5 id="pageNum">Question ${i-1}/10</h5>
             </div>
         </div>
@@ -316,7 +319,48 @@ function pickChoice4(test, quizId, i){
     playingTest(test, quizId, i)
 }
 function calScore(){
+    let totalScore = 0;
+    let timeLeft = 180 - Number(localStorage.getItem("second"));
     for (let k = 1; k <11 ; k++) {
+        let correct = localStorage.getItem("correct"+k);
+        let choice = localStorage.getItem(correct);
+        if (choice === "2"){
+            totalScore += Number(localStorage.getItem("score"+k)) + timeLeft/10*50;
+        }
+    }
 
+    alert("your score :" + totalScore);
+    let result = {
+        "score": totalScore,
+        "user": {
+            "id": localStorage.getItem("userId"),
+        }, "test": {
+            "id": localStorage.getItem("testInPlay"),
+        }
+    }
+    console.log(result)
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem("token")
+        },
+        type: "POST",
+        url: "http://localhost:8080/api/results/create",
+        data: JSON.stringify(result),
+        success: function () {
+            alert("Thêm Thành Công")
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+function increaseTime(){
+    let second = Number(localStorage.getItem("time")) + 1;
+    localStorage.setItem("time",second);
+    document.getElementById("time").innerHTML= "Time:"+ second+ "/180s"
+    if (second===180){
+        calScore();
     }
 }
