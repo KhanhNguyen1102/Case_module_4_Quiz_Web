@@ -1,5 +1,8 @@
+let second = 0 ;
+localStorage.setItem("time",second);
+var startTime= setInterval(increaseTime,1000);
 function playTest() {
-
+    localStorage.setItem("time",0);
     let id = localStorage.getItem("testInPlay")
     $.ajax({
         type: "GET",
@@ -79,9 +82,7 @@ function playTest() {
             localStorage.setItem("choice104","1");
             let i = 2;
             playingTest(test.quizzes[0].content, test.quizzes[0].id, i);
-            let second = 0 ;
-            localStorage.setItem("time",second);
-            setInterval(increaseTime,1000);
+
         }
     })
 
@@ -319,17 +320,18 @@ function pickChoice4(test, quizId, i){
     playingTest(test, quizId, i)
 }
 function calScore(){
+    clearInterval(startTime)
     let totalScore = 0;
     let timeLeft = 180 - Number(localStorage.getItem("second"));
+    let correctCount = 0
     for (let k = 1; k <11 ; k++) {
         let correct = localStorage.getItem("correct"+k);
         let choice = localStorage.getItem(correct);
         if (choice === "2"){
             totalScore += Number(localStorage.getItem("score"+k)) + timeLeft/10*50;
+            correctCount +=1;
         }
     }
-
-    alert("your score :" + totalScore);
     let result = {
         "score": totalScore,
         "user": {
@@ -349,7 +351,17 @@ function calScore(){
         url: "http://localhost:8080/api/results/create",
         data: JSON.stringify(result),
         success: function () {
-            alert("Thêm Thành Công")
+            alert("your score :" + totalScore);
+            if (correctCount<4){
+                document.getElementById("content").innerHTML="<center><h1>Your Score :" + totalScore + " with "+ correctCount + "/10</h1><br><h1 id='mess'>You're so bad!</h1><button id='again'><a href='play1.html'>Play again</a></button></center>";
+            }else if (correctCount<7){
+                document.getElementById("content").innerHTML="<center><h1>Your Score :" + totalScore + " with "+ correctCount + "/10</h1><br><h1 id='mess'>Try Better Next Time!</h1><button  id='again'><a href='play1.html'>Play again</a></button></center>";
+            }else if(correctCount===10){
+                document.getElementById("content").innerHTML="<center><h1>Your Score :" + totalScore + " with "+ correctCount + "/10</h1><br><h1 id='mess'>Ahhh! You're a genius</h1><button id='again'><a href='play1.html'>Play again</a></button></center>";
+            }else {
+                document.getElementById("content").innerHTML="<center><h1>Your Score :" + totalScore + " with "+ correctCount + "/10</h1><br><h1 id='mess'>You seem to be quite good!</h1><button id='again'><a href='play1.html'>Play again</a></button></center>";
+            }
+
         },
         error: function (error) {
             console.log(error)
