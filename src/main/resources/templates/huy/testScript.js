@@ -3,7 +3,7 @@ function allTest(page) {
     search += ` <div class="select-container">
                                         <form class="d-flex">
                                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="keyTest">
-                                            <button class="btn btn-outline-success" type="button" onclick="searchAllTest(0)">
+                                            <button class="btn btn-outline-success" type="button" onclick="searchAllTest()">
                                                 Search
                                             </button></br>
                                         </form>
@@ -43,7 +43,7 @@ function displayTest1(array,page,test){
         <th scope="row">${i+1}</th>
         <td>${array[i].name}</td>
         <td>${array[i].user.username}</td>
-        <td><button onclick="viewTest(${array[i].id})">View</button><button><a onclick="loadTest(${array[i].id})" >Play</a></button></td>
+        <td width="300px"><button type="button" class="btn btn-info" onclick="viewTest(${array[i].id})"><i class="fas fa-pen"></i></button>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<button type="button" class="btn btn-danger" onclick="loadTest(${array[i].id})">  <i class="fas fa-gamepad"></i></button>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<button type="button" class="btn btn-dark" onclick="deleteTest(${array[i].id})" ><i class="far fa-trash-alt"></i></button></td>
     </tr>`
     }
     res += `</tbody></table>
@@ -237,8 +237,9 @@ function deleteTest(id) {
         $.ajax({
             type: "DELETE",
             url: "http://localhost:8080/api/tests?id=" + id,
+            headers: { "Authorization": 'Bearer ' + localStorage.getItem("token") },
             success: function (test) {
-                allUser(test)
+                allTest(0);
             },
             error: function (error) {
             }

@@ -29,7 +29,7 @@ public class TestController {
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
     @GetMapping("/page")
-    public ResponseEntity<Page<Test>> findAllTest(@PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<Page<Test>> findAllTest(@PageableDefault(size = 8) Pageable pageable) {
         Page<Test> tests =  testService.findAll(pageable);
         if (tests.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
